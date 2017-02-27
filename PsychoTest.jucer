@@ -5,6 +5,17 @@
               jucerVersion="4.3.1">
   <MAINGROUP id="s5JhoI" name="PsychoTest">
     <GROUP id="{2D9F5EDB-FB92-E0C2-D52F-991F5AEF5138}" name="Source">
+      <GROUP id="{09601022-2444-E6C3-7BB5-66F28E0515F9}" name="ControlFlow"/>
+      <GROUP id="{5CC1D9DF-A13F-2D90-D74D-696D29047396}" name="AudioEngine">
+        <FILE id="LDjX4O" name="ILDEngine.cpp" compile="1" resource="0" file="Source/ILDEngine.cpp"/>
+        <FILE id="UWYBcw" name="ILDEngine.h" compile="0" resource="0" file="Source/ILDEngine.h"/>
+        <FILE id="pfU3W2" name="ITDEngine.cpp" compile="1" resource="0" file="Source/ITDEngine.cpp"/>
+        <FILE id="nGXKp0" name="ITDEngine.h" compile="0" resource="0" file="Source/ITDEngine.h"/>
+        <FILE id="haSiw5" name="OscGen.cpp" compile="1" resource="0" file="Source/OscGen.cpp"/>
+        <FILE id="SZAxer" name="OscGen.h" compile="0" resource="0" file="Source/OscGen.h"/>
+      </GROUP>
+      <FILE id="zdjD4k" name="GUI.cpp" compile="1" resource="0" file="Source/GUI.cpp"/>
+      <FILE id="LTKiVd" name="GUI.h" compile="0" resource="0" file="Source/GUI.h"/>
       <FILE id="rSIF8u" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="t4sVcs" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
