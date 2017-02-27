@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="oX9wBd" name="PsychoTest" projectType="guiapp" version="1.0.0"
+              bundleIdentifier="com.yourcompany.PsychoTest" includeBinaryInAppConfig="1"
+              jucerVersion="4.3.1">
+  <MAINGROUP id="s5JhoI" name="PsychoTest">
+    <GROUP id="{2D9F5EDB-FB92-E0C2-D52F-991F5AEF5138}" name="Source">
+      <FILE id="rSIF8u" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+      <FILE id="t4sVcs" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="PsychoTest"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="PsychoTest"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_events" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_video" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../Juce-Grapefruit/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
+  </MODULES>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>
