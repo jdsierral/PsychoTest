@@ -2,22 +2,22 @@
 
 <JUCERPROJECT id="oX9wBd" name="PsychoTest" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.yourcompany.PsychoTest" includeBinaryInAppConfig="1"
-              jucerVersion="4.3.1">
+              jucerVersion="4.3.0">
   <MAINGROUP id="s5JhoI" name="PsychoTest">
     <GROUP id="{2D9F5EDB-FB92-E0C2-D52F-991F5AEF5138}" name="Source">
       <GROUP id="{09601022-2444-E6C3-7BB5-66F28E0515F9}" name="ControlFlow"/>
       <GROUP id="{5CC1D9DF-A13F-2D90-D74D-696D29047396}" name="AudioEngine">
         <FILE id="KEbNUY" name="AudioPlayer.cpp" compile="1" resource="0" file="Source/AudioPlayer.cpp"/>
-        <FILE id="Xu8BZw" name="AudioPlayer.h" compile="0" resource="0" file="Source/AudioPlayer.h"/>
+        <FILE id="Xu8BZw" name="AudioPlayer.h" compile="1" resource="0" file="Source/AudioPlayer.h"/>
         <FILE id="LDjX4O" name="ILDEngine.cpp" compile="1" resource="0" file="Source/ILDEngine.cpp"/>
-        <FILE id="UWYBcw" name="ILDEngine.h" compile="0" resource="0" file="Source/ILDEngine.h"/>
+        <FILE id="UWYBcw" name="ILDEngine.h" compile="1" resource="0" file="Source/ILDEngine.h"/>
         <FILE id="pfU3W2" name="ITDEngine.cpp" compile="1" resource="0" file="Source/ITDEngine.cpp"/>
-        <FILE id="nGXKp0" name="ITDEngine.h" compile="0" resource="0" file="Source/ITDEngine.h"/>
+        <FILE id="nGXKp0" name="ITDEngine.h" compile="1" resource="0" file="Source/ITDEngine.h"/>
         <FILE id="haSiw5" name="OscGen.cpp" compile="1" resource="0" file="Source/OscGen.cpp"/>
-        <FILE id="SZAxer" name="OscGen.h" compile="0" resource="0" file="Source/OscGen.h"/>
+        <FILE id="SZAxer" name="OscGen.h" compile="1" resource="0" file="Source/OscGen.h"/>
       </GROUP>
       <FILE id="zdjD4k" name="GUI.cpp" compile="1" resource="0" file="Source/GUI.cpp"/>
-      <FILE id="LTKiVd" name="GUI.h" compile="0" resource="0" file="Source/GUI.h"/>
+      <FILE id="LTKiVd" name="GUI.h" compile="1" resource="0" file="Source/GUI.h"/>
       <FILE id="rSIF8u" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="t4sVcs" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
@@ -30,20 +30,20 @@
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="PsychoTest"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../../Juce-Grapefruit/modules"/>
-        <MODULEPATH id="juce_events" path="../../../Juce-Grapefruit/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../../Juce-Grapefruit/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../../Juce-Grapefruit/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../../Juce-Grapefruit/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../../Juce-Grapefruit/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../../../Juce-Grapefruit/modules"/>
-        <MODULEPATH id="juce_video" path="../../../Juce-Grapefruit/modules"/>
-        <MODULEPATH id="juce_opengl" path="../../../Juce-Grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../../Juce-Grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../../Juce-Grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../../Juce-Grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../../Juce-Grapefruit/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../../../Juce-Grapefruit/modules"/>
+        <MODULEPATH id="juce_core" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../Dev/juce-grapefruit-osx/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
@@ -64,4 +64,7 @@
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
   </MODULES>
   <JUCEOPTIONS/>
+  <LIVE_SETTINGS>
+    <OSX/>
+  </LIVE_SETTINGS>
 </JUCERPROJECT>
