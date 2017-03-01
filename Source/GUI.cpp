@@ -32,17 +32,17 @@ GUI::GUI ()
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    addAndMakeVisible (textButton = new TextButton ("new button"));
-    textButton->setButtonText (TRANS("start"));
-    textButton->addListener (this);
+    addAndMakeVisible (startButton = new TextButton ("Start Button"));
+    startButton->setButtonText (TRANS("start"));
+    startButton->addListener (this);
 
-    addAndMakeVisible (textButton2 = new TextButton ("new button"));
-    textButton2->setButtonText (TRANS("1"));
-    textButton2->addListener (this);
+    addAndMakeVisible (opt1Button = new TextButton ("Opt1 Button"));
+    opt1Button->setButtonText (TRANS("1"));
+    opt1Button->addListener (this);
 
-    addAndMakeVisible (textButton3 = new TextButton ("new button"));
-    textButton3->setButtonText (TRANS("2"));
-    textButton3->addListener (this);
+    addAndMakeVisible (opt2Button = new TextButton ("Opt2 Button"));
+    opt2Button->setButtonText (TRANS("2"));
+    opt2Button->addListener (this);
 
     addAndMakeVisible (textEditor = new TextEditor ("new text editor"));
     textEditor->setMultiLine (true);
@@ -69,9 +69,9 @@ GUI::~GUI()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-    textButton = nullptr;
-    textButton2 = nullptr;
-    textButton3 = nullptr;
+    startButton = nullptr;
+    opt1Button = nullptr;
+    opt2Button = nullptr;
     textEditor = nullptr;
 
 
@@ -96,9 +96,9 @@ void GUI::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    textButton->setBounds (168, 112, 224, 128);
-    textButton2->setBounds (192, 312, 72, 24);
-    textButton3->setBounds (288, 312, 72, 24);
+    startButton->setBounds (168, 112, 224, 128);
+    opt1Button->setBounds (192, 312, 72, 24);
+    opt2Button->setBounds (288, 312, 72, 24);
     textEditor->setBounds (200, 24, 192, 80);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
@@ -109,20 +109,20 @@ void GUI::buttonClicked (Button* buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == textButton)
+    if (buttonThatWasClicked == startButton)
     {
-        //[UserButtonCode_textButton] -- add your button handler code here..
-        //[/UserButtonCode_textButton]
+        //[UserButtonCode_startButton] -- add your button handler code here..
+        //[/UserButtonCode_startButton]
     }
-    else if (buttonThatWasClicked == textButton2)
+    else if (buttonThatWasClicked == opt1Button)
     {
-        //[UserButtonCode_textButton2] -- add your button handler code here..
-        //[/UserButtonCode_textButton2]
+        //[UserButtonCode_opt1Button] -- add your button handler code here..
+        //[/UserButtonCode_opt1Button]
     }
-    else if (buttonThatWasClicked == textButton3)
+    else if (buttonThatWasClicked == opt2Button)
     {
-        //[UserButtonCode_textButton3] -- add your button handler code here..
-        //[/UserButtonCode_textButton3]
+        //[UserButtonCode_opt2Button] -- add your button handler code here..
+        //[/UserButtonCode_opt2Button]
     }
 
     //[UserbuttonClicked_Post]
@@ -149,13 +149,13 @@ BEGIN_JUCER_METADATA
                  snapShown="1" overlayOpacity="0.330" fixedSize="1" initialWidth="600"
                  initialHeight="400">
   <BACKGROUND backgroundColour="ffffffff"/>
-  <TEXTBUTTON name="new button" id="9bf53107386741c1" memberName="textButton"
+  <TEXTBUTTON name="Start Button" id="9bf53107386741c1" memberName="startButton"
               virtualName="" explicitFocusOrder="0" pos="168 112 224 128" buttonText="start"
               connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="new button" id="73f09de8d04c1ccd" memberName="textButton2"
+  <TEXTBUTTON name="Opt1 Button" id="73f09de8d04c1ccd" memberName="opt1Button"
               virtualName="" explicitFocusOrder="0" pos="192 312 72 24" buttonText="1"
               connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="new button" id="d16ed9691b30226d" memberName="textButton3"
+  <TEXTBUTTON name="Opt2 Button" id="d16ed9691b30226d" memberName="opt2Button"
               virtualName="" explicitFocusOrder="0" pos="288 312 72 24" buttonText="2"
               connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <TEXTEDITOR name="new text editor" id="af69f34d968c44d7" memberName="textEditor"

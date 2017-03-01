@@ -57,9 +57,9 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<TextButton> textButton;
-    ScopedPointer<TextButton> textButton2;
-    ScopedPointer<TextButton> textButton3;
+    ScopedPointer<TextButton> startButton;
+    ScopedPointer<TextButton> opt1Button;
+    ScopedPointer<TextButton> opt2Button;
     ScopedPointer<TextEditor> textEditor;
 
 
