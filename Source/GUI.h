@@ -35,7 +35,8 @@
                                                                     //[/Comments]
 */
 class GUI  : public Component,
-             public ButtonListener
+             public ButtonListener,
+             public SliderListener
 {
 public:
     //==============================================================================
@@ -49,6 +50,7 @@ public:
     void paint (Graphics& g) override;
     void resized() override;
     void buttonClicked (Button* buttonThatWasClicked) override;
+    void sliderValueChanged (Slider* sliderThatWasMoved) override;
 
 
 
@@ -61,6 +63,13 @@ private:
     ScopedPointer<TextButton> opt1Button;
     ScopedPointer<TextButton> opt2Button;
     ScopedPointer<TextEditor> textEditor;
+    ScopedPointer<ToggleButton> ITDButton;
+    ScopedPointer<ToggleButton> ILDButton;
+    ScopedPointer<TextButton> playButton;
+    ScopedPointer<ToggleButton> leftButton;
+    ScopedPointer<ToggleButton> rightButton;
+    ScopedPointer<Slider> dlySlider;
+    ScopedPointer<Slider> gainSlider;
 
 
     //==============================================================================

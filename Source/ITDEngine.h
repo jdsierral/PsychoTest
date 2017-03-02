@@ -17,16 +17,16 @@
 class ITD{
 public:
 	enum dir {
-		left = 0,
-		right,
-		center
+		left = -1,
+		center = 0,
+		right =1
 	};
 	
 	ITD();
 	~ITD();
 	
 	void init(int bufferSize);
-	void setITD(int samples, dir newDirection);
+	void setITD(int samples, int newDirection);
 	void clearITD();
 	void getNextAudioBlock (AudioSampleBuffer& buffer);
 	
@@ -37,7 +37,7 @@ private:
 	int dlyL, dlyR;
 	int drp, dwp;
 	int dlyBufSize;
-	dir direction;
+	int direction;
 	
 	const float* dlyRd;
 	float* dlyWt;

@@ -10,7 +10,8 @@
 
 #include "ITDEngine.h"
 
-ITD::ITD(){
+ITD::ITD() : dlyL(0), dlyR(0), drp(0), dwp(0),
+dlyBufSize(1), direction(center) {
 }
 
 ITD::~ITD(){
@@ -19,6 +20,7 @@ ITD::~ITD(){
 
 void ITD::init(int bufferSize){
 	dlyBufSize = 2 * bufferSize;
+	if (dlyBufSize < 16) dlyBufSize = 1024;
 	
 	dlyBuffer.setSize(1, dlyBufSize);
 	dlyBuffer.clear();
@@ -28,12 +30,12 @@ void ITD::init(int bufferSize){
 	
 }
 
-void ITD::setITD(int samples, dir newDirection){
+void ITD::setITD(int samples, int newDirection){
 	direction = newDirection;
-	if (direction == dir::left) {
+	if (direction == left) {
 		dlyL = 0;
 		dlyR = samples;
-	} else if (direction == dir::right) {
+	} else if (direction == right) {
 		dlyR = 0;
 		dlyL = samples;
 	}

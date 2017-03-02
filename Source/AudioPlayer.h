@@ -20,16 +20,24 @@ class AudioPlayer		:	public AudioSource
 {
 public:
 	
-	enum test {
-		TD = 0,
-		LD,
-		bypass
+	enum testType {
+		LD = 0,
+		TD
 	};
 	
 	enum states {
-		playRef,
+		playRef = 0,
+		stop1,
 		playTest,
-		stop
+		stop2,
+		
+		totalStates
+	};
+	
+	enum dir {
+		left = -1,
+		center = 0,
+		right = 1
 	};
 	
 	AudioPlayer();
@@ -41,20 +49,25 @@ public:
 	
 	
 	void setState (states newState);
-	void setTest (test newTest);
-	void setDelayInSamples (float delayInSamples);
+	void nextSate ();
+	
+	void setTest (bool newTest);
+	
+	void setDelayInSamples (int delayInSamples);
 	void setDelayInSeconds (float dleayInSeconds);
 	void setGainInAmplitude (float gainInAmplitude);
 	void setGainInDecibels (float gainInDecibels);
+	void setDirection (int newDirection);
 	
 	
 	
-	states getState ();
-	test getTest ();
-	float getDelayInSamples ();
+	int getState ();
+	bool getTest ();
+	int getDelayInSamples ();
 	float getDelayInSeconds ();
 	float getGainInAmplitude ();
 	float getGainInDecibels ();
+	int getDirection();
 	
 
 private:
@@ -62,9 +75,10 @@ private:
 	ScopedPointer<ILD> gains;
 	ScopedPointer<Gen> source;
 	
-	test testType;
-	states state;
-	
+	bool testType; // use 0 for ILD and 1 for ITD
+	int direction;
+	int state;
+	double fs;
 	
 };
 

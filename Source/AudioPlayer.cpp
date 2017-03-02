@@ -13,7 +13,7 @@
 
 
 
-AudioPlayer::AudioPlayer(){
+AudioPlayer::AudioPlayer() : testType(LD), state(stop2) {
 	delay = new ITD();
 	gains = new ILD();
 	source = new Gen();
@@ -23,25 +23,32 @@ AudioPlayer::~AudioPlayer(){
 }
 
 void AudioPlayer::prepareToPlay (int samplesPerBlock, double sampleRate){
-	//delay->init(samplesPerBlock);
-	//gains->clearILD();
+	fs = sampleRate;
+	delay->init(samplesPerBlock);
+	gains->clearILD();
 }
 
 void AudioPlayer::releaseResources(){
 }
 
 void AudioPlayer::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill){
-	if (state != stop) {
-		source->getNextAudioBlock(*bufferToFill.buffer); // This is probably going to be wrong :/
-		if (state == states::playRef) {
-			if (testType == test::TD) {
-				delay->getNextAudioBlock(*bufferToFill.buffer);
-			} else if (testType == test::LD) {
-				gains->getNextAudioBlock(*bufferToFill.buffer);
-			}
+	AudioSampleBuffer* buffer = bufferToFill.buffer;
+	
+	if (state == stop1 || state == stop2) {
+		buffer->clear();
+		return;
+	}
+	
+	source->getNextAudioBlock(*buffer);
+	int bufSize = buffer->getNumSamples();
+	buffer->copyFrom(1, 0, *buffer, 0, 0, bufSize);
+	
+	if (state == playTest) {
+		if (testType == LD) {
+			gains->getNextAudioBlock(*buffer);
+		} else if (testType == TD) {
+			delay->getNextAudioBlock(*buffer);
 		}
-	} else {
-		bufferToFill.buffer->clear();
 	}
 }
 
@@ -53,44 +60,50 @@ void AudioPlayer::setState (states newState){
 	state = newState;
 }
 
-void AudioPlayer::setTest (test newTest){
+void AudioPlayer::nextSate () {
+	++state %= totalStates;
+}
+
+void AudioPlayer::setTest (bool newTest){
 	testType = newTest;
 }
-void AudioPlayer::setDelayInSamples (float delayInSamples){
-	delay->setITD(delayInSamples, ITD::left);
+
+void AudioPlayer::setDelayInSamples (int delayInSamples){
+	delay->setITD(delayInSamples, direction);
 }
 void AudioPlayer::setDelayInSeconds (float delayInSeconds){
-	// do some transformation to get samples
-	float delayInSamples = delayInSeconds;
-	delay->setITD(delayInSamples, ITD::left);
+	float delayInSamples = delayInSeconds * fs;
+	delay->setITD(delayInSamples, direction);
 }
 
 void AudioPlayer::setGainInAmplitude (float gainInAmplitude){
-	gains->setILD(gainInAmplitude, ILD::left);
+	gains->setILD(gainInAmplitude, direction);
 }
 void AudioPlayer::setGainInDecibels (float gainInDecibels){
 	float gainInAmplitude = Decibels::decibelsToGain(gainInDecibels);
-	gains->setILD(gainInAmplitude, ILD::left);
+	gains->setILD(gainInAmplitude, direction);
+}
+
+void AudioPlayer::setDirection (int newDirection) {
+	direction = newDirection;
+	setDelayInSamples(getDelayInSamples());
+	setGainInAmplitude(getGainInAmplitude());
 }
 
 
-
-
-
-AudioPlayer::states AudioPlayer::getState (){
+int AudioPlayer::getState (){
 	return state;
 }
-AudioPlayer::test AudioPlayer::getTest (){
+bool AudioPlayer::getTest (){
 	return testType;
 }
 
-float AudioPlayer::getDelayInSamples (){
+int AudioPlayer::getDelayInSamples (){
 	return delay->getdly();
 }
 
 float AudioPlayer::getDelayInSeconds (){
-	// Do some conversion to return seconds
-	return delay->getdly();
+	return delay->getdly()/fs;
 }
 float AudioPlayer::getGainInAmplitude (){
 	return gains->getLevel();

@@ -11,27 +11,27 @@
 #include "ILDEngine.h"
 
 
-ILD::ILD(){
+ILD::ILD() : gainL(1), gainR(1), direction(center) {
 }
 
 ILD::~ILD(){
 }
 
-void ILD::setILD(float gain, dir newDirection){
+void ILD::setILD(float gain, int newDirection){
 	direction = newDirection;
-	if (direction == dir::left) {
+	if (direction == left) {
 		gainL = 1;
 		gainR = gain;
-	} else if (direction == dir::right) {
+	} else if (direction == right) {
 		gainR = 1;
 		gainL = gain;
-	} else if (direction == dir::center) {
+	} else if (direction == center) {
 		gainL = gainR = 1;
 	}
 }
 
 void ILD::clearILD(){
-	direction = dir::center;
+	direction = center;
 	gainL = gainR = 1;
 }
 

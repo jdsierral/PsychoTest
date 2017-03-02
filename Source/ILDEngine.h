@@ -16,15 +16,17 @@
 
 class ILD {
 public:
+	
 	enum dir {
-		left = 0,
-		right,
-		center
+		left = -1,
+		center = 0,
+		right = 1
 	};
+	
 	ILD();
 	~ILD();
 	
-	void setILD(float gain, dir newDirection);
+	void setILD(float gain, int newDirection);
 	void clearILD();
 	void getNextAudioBlock (AudioSampleBuffer& buffer);
 	
@@ -33,7 +35,7 @@ public:
 private:
 	float gainL;
 	float gainR;
-	dir direction;
+	int direction; // use -1 for left 0 for center 1 for right;
 };
 
 

@@ -15,30 +15,119 @@
 
 //==============================================================================
 /*
- 
- This is a change
- This is also a change
- cambio
- Esto es un cambioooooo
+ *
+ *
+ *
+ * This is a change
+ * This is also a change
+ * cambio
+ * Esto es un cambioooooo
+ *
+ *
+ *
+ *
+ *
+ *
  */
-class MainContentComponent   : public AudioAppComponent
+//==============================================================================
+class MainContentComponent   : 	public AudioAppComponent,
+							   	public ButtonListener,
+								public SliderListener
 {
 public:
 	//==============================================================================
 	MainContentComponent()
 	{
-		setSize (600, 400);
-		addAndMakeVisible(gui);
 		
 		// specify the number of input and output channels that we want to open
 		setAudioChannels (0, 8);
+//		AudioIODevice* ioDevice = AudioAppComponent::deviceManager.getCurrentAudioDevice();
+//		ioDevice->getCurrentSampleRate();
+//		ioDevice->open(2, 2, 48000, 512);
+//		ioDevice->getCurrentSampleRate();
+//
+		// Initialize AudioEngine
 		
-		audioPlayer = new AudioPlayer();
+		
+		// ===================== GUI SETUP =============================//
+		
+		
+		addAndMakeVisible (startButton = new TextButton ("Start Button"));
+		startButton->setButtonText (TRANS("start"));
+		startButton->addListener (this);
+		
+		addAndMakeVisible (opt1Button = new TextButton ("Opt1 Button"));
+		opt1Button->setButtonText (TRANS("1"));
+		opt1Button->addListener (this);
+		
+		addAndMakeVisible (opt2Button = new TextButton ("Opt2 Button"));
+		opt2Button->setButtonText (TRANS("2"));
+		opt2Button->addListener (this);
+		
+		addAndMakeVisible (textEditor = new TextEditor ("new text editor"));
+		textEditor->setMultiLine (true);
+		textEditor->setReturnKeyStartsNewLine (true);
+		textEditor->setReadOnly (true);
+		textEditor->setScrollbarsShown (false);
+		textEditor->setCaretVisible (false);
+		textEditor->setPopupMenuEnabled (false);
+		textEditor->setText (TRANS("Press 1 if the first signal is the leftmost signal, 2 otherwise"));
+		
+		addAndMakeVisible (ITDButton = new ToggleButton ("ITD Button"));
+		ITDButton->setButtonText (TRANS("ITD"));
+		ITDButton->setRadioGroupId (1);
+		ITDButton->addListener (this);
+		
+		addAndMakeVisible (ILDButton = new ToggleButton ("ILD Button"));
+		ILDButton->setButtonText (TRANS("ILD"));
+		ILDButton->setRadioGroupId (1);
+		ILDButton->addListener (this);
+		
+		addAndMakeVisible (playButton = new TextButton ("Play Button"));
+		playButton->setButtonText (TRANS("Play"));
+		playButton->addListener (this);
+		
+		addAndMakeVisible (leftButton = new ToggleButton ("Left Button"));
+		leftButton->setButtonText (TRANS("left"));
+		leftButton->setRadioGroupId (2);
+		leftButton->addListener (this);
+		
+		addAndMakeVisible (rightButton = new ToggleButton ("Right Button"));
+		rightButton->setButtonText (TRANS("right"));
+		rightButton->setRadioGroupId (2);
+		rightButton->addListener (this);
+		rightButton->setToggleState (true, dontSendNotification);
+		
+		addAndMakeVisible (dlySlider = new Slider ("Dly Slider"));
+		dlySlider->setRange (0, 20, 0);
+		dlySlider->setSliderStyle (Slider::LinearHorizontal);
+		dlySlider->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
+		dlySlider->addListener (this);
+		
+		addAndMakeVisible (gainSlider = new Slider ("Gain Slider"));
+		gainSlider->setRange (0, 20, 0);
+		gainSlider->setSliderStyle (Slider::LinearHorizontal);
+		gainSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
+		gainSlider->addListener (this);
+		
+		
+		setSize (600, 400);
 		
 	}
 	
 	~MainContentComponent()
 	{
+		startButton = nullptr;
+		opt1Button = nullptr;
+		opt2Button = nullptr;
+		textEditor = nullptr;
+		ITDButton = nullptr;
+		ILDButton = nullptr;
+		playButton = nullptr;
+		leftButton = nullptr;
+		rightButton = nullptr;
+		dlySlider = nullptr;
+		gainSlider = nullptr;
 		shutdownAudio();
 	}
 	
@@ -52,9 +141,7 @@ public:
 		// but be careful - it will be called on the audio thread, not the GUI thread.
 		
 		// For more details, see the help for AudioProcessor::prepareToPlay()
-		if (audioPlayer != NULL) {
-			audioPlayer->prepareToPlay(samplesPerBlockExpected, sampleRate);
-		}
+		audioPlayer.prepareToPlay(samplesPerBlockExpected, sampleRate);
 		
 	}
 	
@@ -67,8 +154,8 @@ public:
 		// Right now we are not producing any data, in which case we need to clear the buffer
 		// (to prevent the output of random noise)
 		
-		bufferToFill.clearActiveBufferRegion();
-		audioPlayer->getNextAudioBlock(bufferToFill);
+		bufferToFill.buffer->clear();
+		audioPlayer.getNextAudioBlock(bufferToFill);
 	}
 	
 	void releaseResources() override
@@ -83,7 +170,13 @@ public:
 	void paint (Graphics& g) override
 	{
 		// (Our component is opaque, so we must completely fill the background with a solid colour)
-		g.fillAll (Colours::black);
+		g.fillAll (Colours::white);
+		
+		g.setColour (Colours::black);
+		g.setFont (Font (15.00f, Font::plain));
+		g.drawText (TRANS("Just 4 Dbgn"),
+					7, 99, 97, 30,
+					Justification::centred, true);
 		
 		
 		// You can add your drawing code here!
@@ -94,15 +187,86 @@ public:
 		// This is called when the MainContentComponent is resized.
 		// If you add any child components, this is where you should
 		// update their positions.
+		startButton->setBounds (184, 112, 224, 128);
+		opt1Button->setBounds (208, 312, 72, 24);
+		opt2Button->setBounds (304, 312, 72, 24);
+		textEditor->setBounds (200, 24, 192, 80);
+		ITDButton->setBounds (8, 216, 80, 24);
+		ILDButton->setBounds (8, 272, 80, 24);
+		playButton->setBounds (56, 368, 56, 24);
+		leftButton->setBounds (8, 320, 48, 24);
+		rightButton->setBounds (56, 320, 56, 24);
+		dlySlider->setBounds (56, 216, 120, 32);
+		gainSlider->setBounds (56, 272, 120, 32);
 	}
 	
+	void buttonClicked (Button* buttonThatWasClicked) override
+	{
+		if (buttonThatWasClicked == startButton)
+		{
+		}
+		else if (buttonThatWasClicked == opt1Button)
+		{
+		}
+		else if (buttonThatWasClicked == opt2Button)
+		{
+		}
+		else if (buttonThatWasClicked == ITDButton)
+		{
+			audioPlayer.setTest(1);
+		}
+		else if (buttonThatWasClicked == ILDButton)
+		{
+			audioPlayer.setTest(0);
+		}
+		else if (buttonThatWasClicked == playButton)
+		{
+			audioPlayer.nextSate();
+		}
+		else if (buttonThatWasClicked == leftButton)
+		{
+			audioPlayer.setDirection(-1);
+		}
+		else if (buttonThatWasClicked == rightButton)
+		{
+			audioPlayer.setDirection(1);
+		}
+	}
+	
+	void sliderValueChanged (Slider* sliderThatWasMoved) override
+	{
+		if (sliderThatWasMoved == dlySlider)
+		{
+			audioPlayer.setDelayInSamples(dlySlider->getValue());
+		}
+		else if (sliderThatWasMoved == gainSlider)
+		{
+			audioPlayer.setGainInDecibels(-gainSlider->getValue());
+		}
+	}
 	
 private:
 	//==============================================================================
 	
-	// Your private member variables go here...
-	GUI gui;
-	ScopedPointer<AudioPlayer> audioPlayer;
+	//===================  Private Members ===================//
+	
+	
+	//Thought about using scopedPointer class from juce to create regular
+	//pointers as their destruction gets automatically handled
+	
+	AudioPlayer audioPlayer;
+	
+	ScopedPointer<TextButton> startButton;
+	ScopedPointer<TextButton> opt1Button;
+	ScopedPointer<TextButton> opt2Button;
+	ScopedPointer<TextEditor> textEditor;
+	ScopedPointer<ToggleButton> ITDButton;
+	ScopedPointer<ToggleButton> ILDButton;
+	ScopedPointer<TextButton> playButton;
+	ScopedPointer<ToggleButton> leftButton;
+	ScopedPointer<ToggleButton> rightButton;
+	ScopedPointer<Slider> dlySlider;
+	ScopedPointer<Slider> gainSlider;
 	
 	
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
