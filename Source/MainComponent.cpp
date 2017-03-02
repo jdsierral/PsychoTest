@@ -15,6 +15,7 @@
 
 //==============================================================================
 /*
+<<<<<<< HEAD
  *
  *
  *
@@ -28,6 +29,13 @@
  *
  *
  *
+=======
+ 
+ This is a change
+ This is also a change
+ cambio2
+ 
+>>>>>>> origin/master
  */
 //==============================================================================
 class MainContentComponent   : 	public AudioAppComponent,
