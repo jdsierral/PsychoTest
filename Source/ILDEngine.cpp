@@ -11,6 +11,12 @@
 #include "ILDEngine.h"
 
 
+ILD::ILD(){
+}
+
+ILD::~ILD(){
+}
+
 void ILD::setILD(float gain, dir newDirection){
 	direction = newDirection;
 	if (direction == dir::left) {

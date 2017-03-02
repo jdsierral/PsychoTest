@@ -23,8 +23,8 @@ AudioPlayer::~AudioPlayer(){
 }
 
 void AudioPlayer::prepareToPlay (int samplesPerBlock, double sampleRate){
-	delay->init(samplesPerBlock);
-	gains->clearILD();
+	//delay->init(samplesPerBlock);
+	//gains->clearILD();
 }
 
 void AudioPlayer::releaseResources(){

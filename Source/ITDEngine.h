@@ -22,6 +22,9 @@ public:
 		center
 	};
 	
+	ITD();
+	~ITD();
+	
 	void init(int bufferSize);
 	void setITD(int samples, dir newDirection);
 	void clearITD();

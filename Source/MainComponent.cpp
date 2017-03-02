@@ -52,8 +52,9 @@ public:
 		// but be careful - it will be called on the audio thread, not the GUI thread.
 		
 		// For more details, see the help for AudioProcessor::prepareToPlay()
-		
-		//audioPlayer->prepareToPlay(samplesPerBlockExpected, sampleRate);
+		if (audioPlayer != NULL) {
+			audioPlayer->prepareToPlay(samplesPerBlockExpected, sampleRate);
+		}
 		
 	}
 	
@@ -66,8 +67,8 @@ public:
 		// Right now we are not producing any data, in which case we need to clear the buffer
 		// (to prevent the output of random noise)
 		
-		//bufferToFill.clearActiveBufferRegion();
-		//audioPlayer->getNextAudioBlock(bufferToFill);
+		bufferToFill.clearActiveBufferRegion();
+		audioPlayer->getNextAudioBlock(bufferToFill);
 	}
 	
 	void releaseResources() override

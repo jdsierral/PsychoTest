@@ -10,6 +10,11 @@
 
 #include "ITDEngine.h"
 
+ITD::ITD(){
+}
+
+ITD::~ITD(){
+}
 
 
 void ITD::init(int bufferSize){

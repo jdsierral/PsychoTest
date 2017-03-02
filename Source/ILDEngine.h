@@ -21,6 +21,8 @@ public:
 		right,
 		center
 	};
+	ILD();
+	~ILD();
 	
 	void setILD(float gain, dir newDirection);
 	void clearILD();
