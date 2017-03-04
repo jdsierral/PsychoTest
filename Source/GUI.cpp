@@ -90,6 +90,24 @@ GUI::GUI ()
     gainSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
     gainSlider->addListener (this);
 
+    addAndMakeVisible (posBox = new ComboBox ("Position Box"));
+    posBox->setEditableText (false);
+    posBox->setJustificationType (Justification::centredLeft);
+    posBox->setTextWhenNothingSelected (TRANS("Select Position"));
+    posBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
+    posBox->addItem (TRANS("Front"), 1);
+    posBox->addItem (TRANS("Front Lateral"), 2);
+    posBox->addItem (TRANS("Lateral"), 3);
+    posBox->addItem (TRANS("Rear Lateral"), 4);
+    posBox->addItem (TRANS("Rear"), 5);
+    posBox->addListener (this);
+
+    addAndMakeVisible (volSlider = new Slider ("Volume Slider"));
+    volSlider->setRange (-60, 0, 0.1);
+    volSlider->setSliderStyle (Slider::LinearBar);
+    volSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    volSlider->addListener (this);
+
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -117,6 +135,8 @@ GUI::~GUI()
     rightButton = nullptr;
     dlySlider = nullptr;
     gainSlider = nullptr;
+    posBox = nullptr;
+    volSlider = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -157,6 +177,8 @@ void GUI::resized()
     rightButton->setBounds (56, 320, 56, 24);
     dlySlider->setBounds (56, 216, 120, 32);
     gainSlider->setBounds (56, 272, 120, 32);
+    posBox->setBounds (216, 352, 150, 24);
+    volSlider->setBounds (472, 368, 118, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -226,9 +248,29 @@ void GUI::sliderValueChanged (Slider* sliderThatWasMoved)
         //[UserSliderCode_gainSlider] -- add your slider handling code here..
         //[/UserSliderCode_gainSlider]
     }
+    else if (sliderThatWasMoved == volSlider)
+    {
+        //[UserSliderCode_volSlider] -- add your slider handling code here..
+        //[/UserSliderCode_volSlider]
+    }
 
     //[UsersliderValueChanged_Post]
     //[/UsersliderValueChanged_Post]
+}
+
+void GUI::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+{
+    //[UsercomboBoxChanged_Pre]
+    //[/UsercomboBoxChanged_Pre]
+
+    if (comboBoxThatHasChanged == posBox)
+    {
+        //[UserComboBoxCode_posBox] -- add your combo box handling code here..
+        //[/UserComboBoxCode_posBox]
+    }
+
+    //[UsercomboBoxChanged_Post]
+    //[/UsercomboBoxChanged_Post]
 }
 
 
@@ -290,6 +332,15 @@ BEGIN_JUCER_METADATA
   <SLIDER name="Gain Slider" id="eb0d63f51b45bef2" memberName="gainSlider"
           virtualName="" explicitFocusOrder="0" pos="56 272 120 32" min="0"
           max="10" int="0" style="LinearHorizontal" textBoxPos="TextBoxBelow"
+          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
+          needsCallback="1"/>
+  <COMBOBOX name="Position Box" id="3115378778036870" memberName="posBox"
+            virtualName="" explicitFocusOrder="0" pos="216 352 150 24" editable="0"
+            layout="33" items="Front&#10;Front Lateral&#10;Lateral&#10;Rear Lateral&#10;Rear"
+            textWhenNonSelected="Select Position" textWhenNoItems="(no choices)"/>
+  <SLIDER name="Volume Slider" id="83158b992b2ad04d" memberName="volSlider"
+          virtualName="" explicitFocusOrder="0" pos="472 368 118 24" min="-60"
+          max="0" int="0.10000000000000000555" style="LinearBar" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="1"/>
 </JUCER_COMPONENT>

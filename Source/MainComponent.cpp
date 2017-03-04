@@ -12,6 +12,8 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "GUI.h"
 #include "AudioPlayer.h"
+#include "SpeakerSelector.h"
+
 
 //==============================================================================
 /*
@@ -32,23 +34,16 @@
 //==============================================================================
 class MainContentComponent   : 	public AudioAppComponent,
 							   	public ButtonListener,
-								public SliderListener
+								public SliderListener,
+								public ComboBoxListener
 {
 public:
 	//==============================================================================
 	MainContentComponent()
 	{
 		
-		// specify the number of input and output channels that we want to open
 		setAudioChannels (0, 8);
-//		AudioIODevice* ioDevice = AudioAppComponent::deviceManager.getCurrentAudioDevice();
-//		ioDevice->getCurrentSampleRate();
-//		ioDevice->open(2, 2, 48000, 512);
-//		ioDevice->getCurrentSampleRate();
-//
-		// Initialize AudioEngine
-		
-		
+
 		// ===================== GUI SETUP =============================//
 		
 		
@@ -110,6 +105,23 @@ public:
 		gainSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
 		gainSlider->addListener (this);
 		
+		addAndMakeVisible (posBox = new ComboBox ("Position Box"));
+		posBox->setEditableText (false);
+		posBox->setJustificationType (Justification::centredLeft);
+		posBox->setTextWhenNothingSelected (TRANS("Select Position"));
+		posBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
+		posBox->addItem (TRANS("Front"), 1);
+		posBox->addItem (TRANS("Front Lateral"), 2);
+		posBox->addItem (TRANS("Lateral"), 3);
+		posBox->addItem (TRANS("Rear Lateral"), 4);
+		posBox->addItem (TRANS("Rear"), 5);
+		posBox->addListener (this);
+		
+		addAndMakeVisible (volSlider = new Slider ("Volume Slider"));
+		volSlider->setRange (-60, 0, 0.1);
+		volSlider->setSliderStyle (Slider::LinearBar);
+		volSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+		volSlider->addListener (this);
 		
 		setSize (600, 400);
 		
@@ -128,6 +140,8 @@ public:
 		rightButton = nullptr;
 		dlySlider = nullptr;
 		gainSlider = nullptr;
+		posBox = nullptr;
+		volSlider = nullptr;
 		shutdownAudio();
 	}
 	
@@ -153,9 +167,11 @@ public:
 		
 		// Right now we are not producing any data, in which case we need to clear the buffer
 		// (to prevent the output of random noise)
-		
 		bufferToFill.buffer->clear();
 		audioPlayer.getNextAudioBlock(bufferToFill);
+		spkrSel.process(bufferToFill);
+		bufferToFill.buffer->applyGain(0.5);
+		
 	}
 	
 	void releaseResources() override
@@ -198,6 +214,9 @@ public:
 		rightButton->setBounds (56, 320, 56, 24);
 		dlySlider->setBounds (56, 216, 120, 32);
 		gainSlider->setBounds (56, 272, 120, 32);
+		posBox->setBounds (216, 352, 150, 24);
+		volSlider->setBounds (472, 368, 118, 24);
+		
 	}
 	
 	void buttonClicked (Button* buttonThatWasClicked) override
@@ -243,18 +262,52 @@ public:
 		{
 			audioPlayer.setGainInDecibels(-gainSlider->getValue());
 		}
+		else if (sliderThatWasMoved == volSlider)
+		{
+			vol = volSlider->getValue();
+		}
+	}
+	
+	void comboBoxChanged(ComboBox* comboBoxThatHasChanged) override
+	{
+		spkrSel.setSpeakerSet(posBox->getSelectedItemIndex());
 	}
 	
 private:
 	//==============================================================================
 	
-	//===================  Private Members ===================//
+	void initAudioSettings (){
+		/*
+		 AudioIODevice* ioDevice = AudioAppComponent::deviceManager.getCurrentAudioDevice();
+		 ioDevice->open(2, 2, 48000, 512);
+		 ioDevice->getCurrentSampleRate();
+		 ioDevice->getAvailableBufferSizes();
+		 
+		 Initialize AudioEngine
+		 
+		 void AudioAppComponent::setAudioChannels (int numInputChannels, int numOutputChannels, const XmlElement* const xml)
+		 {
+			String audioError = deviceManager.initialise (numInputChannels, numOutputChannels, xml, true);
+			jassert (audioError.isEmpty());
+			
+			deviceManager.addAudioCallback (&audioSourcePlayer);
+			audioSourcePlayer.setSource (this);
+		}
+		 */
+	}
+	//==================  Private Variables  ===================//
+	
+	float vol;
+	
+	
+	//===================  Private Members  ===================//
 	
 	
 	//Thought about using scopedPointer class from juce to create regular
 	//pointers as their destruction gets automatically handled
 	
 	AudioPlayer audioPlayer;
+	SpeakerSelector spkrSel;
 	
 	ScopedPointer<TextButton> startButton;
 	ScopedPointer<TextButton> opt1Button;
@@ -267,6 +320,8 @@ private:
 	ScopedPointer<ToggleButton> rightButton;
 	ScopedPointer<Slider> dlySlider;
 	ScopedPointer<Slider> gainSlider;
+	ScopedPointer<Slider> volSlider;
+	ScopedPointer<ComboBox> posBox;
 	
 	
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

@@ -36,7 +36,8 @@
 */
 class GUI  : public Component,
              public ButtonListener,
-             public SliderListener
+             public SliderListener,
+             public ComboBoxListener
 {
 public:
     //==============================================================================
@@ -51,6 +52,7 @@ public:
     void resized() override;
     void buttonClicked (Button* buttonThatWasClicked) override;
     void sliderValueChanged (Slider* sliderThatWasMoved) override;
+    void comboBoxChanged (ComboBox* comboBoxThatHasChanged) override;
 
 
 
@@ -70,6 +72,8 @@ private:
     ScopedPointer<ToggleButton> rightButton;
     ScopedPointer<Slider> dlySlider;
     ScopedPointer<Slider> gainSlider;
+    ScopedPointer<ComboBox> posBox;
+    ScopedPointer<Slider> volSlider;
 
 
     //==============================================================================
