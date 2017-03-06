@@ -13,6 +13,7 @@
 #include "GUI.h"
 #include "AudioPlayer.h"
 #include "SpeakerSelector.h"
+#include "DataManager.h"
 
 
 //==============================================================================
@@ -35,7 +36,8 @@
 class MainContentComponent   : 	public AudioAppComponent,
 							   	public ButtonListener,
 								public SliderListener,
-								public ComboBoxListener
+								public ComboBoxListener,
+								public TextEditor::Listener
 {
 public:
 	//==============================================================================
@@ -50,6 +52,7 @@ public:
 		addAndMakeVisible (startButton = new TextButton ("Start Button"));
 		startButton->setButtonText (TRANS("start"));
 		startButton->addListener (this);
+		startButton->setEnabled(false);
 		
 		addAndMakeVisible (opt1Button = new TextButton ("Opt1 Button"));
 		opt1Button->setButtonText (TRANS("1"));
@@ -123,6 +126,17 @@ public:
 		volSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 		volSlider->addListener (this);
 		
+		addAndMakeVisible (userTextBox = new TextEditor ("User TextBox"));
+		userTextBox->setMultiLine (false);
+		userTextBox->setReturnKeyStartsNewLine (false);
+		userTextBox->setEscapeAndReturnKeysConsumed(false);
+		userTextBox->setReadOnly (false);
+		userTextBox->setScrollbarsShown (true);
+		userTextBox->setCaretVisible (true);
+		userTextBox->setPopupMenuEnabled (true);
+		userTextBox->setText (TRANS("What is your name?"));
+		userTextBox->addListener (this);
+		
 		setSize (600, 400);
 		
 	}
@@ -142,6 +156,7 @@ public:
 		gainSlider = nullptr;
 		posBox = nullptr;
 		volSlider = nullptr;
+		userTextBox = nullptr;
 		shutdownAudio();
 	}
 	
@@ -216,6 +231,7 @@ public:
 		gainSlider->setBounds (56, 272, 120, 32);
 		posBox->setBounds (216, 352, 150, 24);
 		volSlider->setBounds (472, 368, 118, 24);
+		userTextBox->setBounds (224, 264, 150, 24);
 		
 	}
 	
@@ -270,8 +286,19 @@ public:
 	
 	void comboBoxChanged(ComboBox* comboBoxThatHasChanged) override
 	{
-		spkrSel.setSpeakerSet(posBox->getSelectedItemIndex());
+		if (comboBoxThatHasChanged == posBox) {
+			spkrSel.setSpeakerSet(posBox->getSelectedItemIndex());
+		}
+		
 	}
+
+	void textEditorReturnKeyPressed (TextEditor& textEditorChanged) override {
+		startButton->setEnabled(true);
+		String user = userTextBox->getText();
+		dataManager = new DataManager(user);
+	}
+	
+	
 	
 private:
 	//==============================================================================
@@ -322,6 +349,8 @@ private:
 	ScopedPointer<Slider> gainSlider;
 	ScopedPointer<Slider> volSlider;
 	ScopedPointer<ComboBox> posBox;
+	ScopedPointer<TextEditor> userTextBox;
+	ScopedPointer<DataManager> dataManager;
 	
 	
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

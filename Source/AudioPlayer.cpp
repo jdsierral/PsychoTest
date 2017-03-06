@@ -56,7 +56,7 @@ void AudioPlayer::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 
 
 
-void AudioPlayer::setState (states newState){
+void AudioPlayer::setState (int newState){
 	state = newState;
 }
 

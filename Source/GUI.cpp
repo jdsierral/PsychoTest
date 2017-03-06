@@ -108,6 +108,15 @@ GUI::GUI ()
     volSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
     volSlider->addListener (this);
 
+    addAndMakeVisible (userTextBox = new TextEditor ("User TextBox"));
+    userTextBox->setMultiLine (false);
+    userTextBox->setReturnKeyStartsNewLine (false);
+    userTextBox->setReadOnly (false);
+    userTextBox->setScrollbarsShown (true);
+    userTextBox->setCaretVisible (true);
+    userTextBox->setPopupMenuEnabled (true);
+    userTextBox->setText (TRANS("What is your name?"));
+
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -137,6 +146,7 @@ GUI::~GUI()
     gainSlider = nullptr;
     posBox = nullptr;
     volSlider = nullptr;
+    userTextBox = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -179,6 +189,7 @@ void GUI::resized()
     gainSlider->setBounds (56, 272, 120, 32);
     posBox->setBounds (216, 352, 150, 24);
     volSlider->setBounds (472, 368, 118, 24);
+    userTextBox->setBounds (224, 264, 150, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -343,6 +354,10 @@ BEGIN_JUCER_METADATA
           max="0" int="0.10000000000000000555" style="LinearBar" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="1"/>
+  <TEXTEDITOR name="User TextBox" id="154483f6de3c0e11" memberName="userTextBox"
+              virtualName="" explicitFocusOrder="0" pos="224 264 150 24" initialText="What is your name?"
+              multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="1"
+              caret="1" popupmenu="1"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

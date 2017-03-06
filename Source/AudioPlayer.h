@@ -48,7 +48,7 @@ public:
 	
 	
 	
-	void setState (states newState);
+	void setState (int newState);
 	void nextSate ();
 	
 	void setTest (bool newTest);

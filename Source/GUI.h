@@ -74,6 +74,7 @@ private:
     ScopedPointer<Slider> gainSlider;
     ScopedPointer<ComboBox> posBox;
     ScopedPointer<Slider> volSlider;
+    ScopedPointer<TextEditor> userTextBox;
 
 
     //==============================================================================
