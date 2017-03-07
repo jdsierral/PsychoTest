@@ -64,8 +64,8 @@ void AudioPlayer::nextSate () {
 	++state %= totalStates;
 }
 
-void AudioPlayer::setTest (bool newTest){
-	testType = newTest;
+void AudioPlayer::setTest (bool isITD){
+	testType = isITD;
 }
 
 void AudioPlayer::setDelayInSamples (int delayInSamples){

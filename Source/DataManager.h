@@ -28,19 +28,19 @@ public:
 		back
 	};
 	
-	DataManager(String newUser);
+	DataManager (String newUser);
 	
-	void writeTrial();
-	void clearTrial();
+	void writeTrial ();
+	void clearTrial ();
 	
-	void setPosition(int newPos);
-	void setAnwser(bool ans);
-	void setCorrAns(bool ans);
+	void setPosition (int newPos);
+	void setAnwser (bool ans);
+	void setCorrAns (bool ans);
 	
 	
 private:
 	
-	String qualifierToString(char c) {
+	String qualifierToString (char c) {
 		String b1 = (String)(c & 8? 1 : 0) + ",\t";
 		String b2 = (String)(c & 4? 1 : 0) + ",\t";
 		String b3 = (String)(c & 2? 1 : 0) + ",\t";

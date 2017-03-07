@@ -19,6 +19,7 @@ class SpeakerSelector
 public:
 	
 	SpeakerSelector();
+	~SpeakerSelector();
 	
 	enum speakerSet {
 		rearLeft = -3,
@@ -34,7 +35,7 @@ public:
 	/**
 	 call to process audio
 	 */
-	void process(const AudioSourceChannelInfo& bufferToFill);
+	void process (const AudioSourceChannelInfo& bufferToFill);
 	
 	/**
 	 set Speaker set, check confiuration to be sure
@@ -43,7 +44,7 @@ public:
 	void setSpeakerSet (int newSpeakerSet);
 	
 	/**
-	 iterator to go to next speaker set (moves arroud)
+	 iterator to go to next speaker set moves arroud
  	 */
 	void nextSpeakerSet ();
 	
@@ -53,7 +54,7 @@ public:
 	void nextHalfSpeakerSet ();
 	
 	/**
-	 get value of speaker set following enum
+	 get value of speaker set following
 	 */
 	int getSpeakerSet ();
 	
@@ -64,4 +65,3 @@ private:
 	int rightDest;
 };
 #endif  // SPEAKERSELECTOR_H_INCLUDED
-

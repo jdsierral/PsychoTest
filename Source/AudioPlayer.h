@@ -139,7 +139,6 @@ public:
 	
 	/**
 	 get Direction as int ==> follows 
-	 enum 
 	 	-1 = left; 
 	 	0 = center; 
 	 	1 = right

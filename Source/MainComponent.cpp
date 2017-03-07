@@ -334,6 +334,7 @@ private:
 	
 	AudioPlayer audioPlayer;
 	SpeakerSelector spkrSel;
+	ScopedPointer<DataManager> dataManager;
 	
 	ScopedPointer<TextButton> startButton;
 	ScopedPointer<TextButton> opt1Button;
@@ -349,7 +350,7 @@ private:
 	ScopedPointer<Slider> volSlider;
 	ScopedPointer<ComboBox> posBox;
 	ScopedPointer<TextEditor> userTextBox;
-	ScopedPointer<DataManager> dataManager;
+	
 	
 	
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

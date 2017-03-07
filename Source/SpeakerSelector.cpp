@@ -14,6 +14,10 @@ SpeakerSelector::SpeakerSelector () : spkrSet(0){
 	setSpeakerSet(spkrSet);
 }
 
+SpeakerSelector::~SpeakerSelector () {
+
+}
+
 void SpeakerSelector::process (const AudioSourceChannelInfo& bufferToFill) {
 	int bufSize = bufferToFill.buffer->getNumSamples();
 	if (spkrSet != 0) {
@@ -23,8 +27,6 @@ void SpeakerSelector::process (const AudioSourceChannelInfo& bufferToFill) {
 }
 
 void SpeakerSelector::setSpeakerSet (int newSpeakerSet) {
-	
-	
 	spkrSet = newSpeakerSet;
 	switch (spkrSet) {
 		case rearLeft:
