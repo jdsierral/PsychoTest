@@ -31,11 +31,30 @@ public:
 		rear
 	};
 	
+	/**
+	 call to process audio
+	 */
 	void process(const AudioSourceChannelInfo& bufferToFill);
 	
+	/**
+	 set Speaker set, check confiuration to be sure
+	 follos enum in class delcaration
+	 */
 	void setSpeakerSet (int newSpeakerSet);
+	
+	/**
+	 iterator to go to next speaker set (moves arroud)
+ 	 */
 	void nextSpeakerSet ();
+	
+	/**
+	 iterator trough half of the circle, just to use half the speakers
+	 */
 	void nextHalfSpeakerSet ();
+	
+	/**
+	 get value of speaker set following enum
+	 */
 	int getSpeakerSet ();
 	
 private:
@@ -45,3 +64,4 @@ private:
 	int rightDest;
 };
 #endif  // SPEAKERSELECTOR_H_INCLUDED
+

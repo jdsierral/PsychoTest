@@ -59,5 +59,4 @@ void DataManager::writeTrial() {
 				qualifierToString(answrQualifier) + sep +
 				(String)value + sep +
 				(String)reversal + "\n";
-	std::cout<<ln;
 }
