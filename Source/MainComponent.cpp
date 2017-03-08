@@ -1,11 +1,3 @@
-/*
- ==============================================================================
- 
- This file was auto-generated!
- 
- ==============================================================================
- */
-
 #ifndef MAINCOMPONENT_H_INCLUDED
 #define MAINCOMPONENT_H_INCLUDED
 
@@ -16,125 +8,119 @@
 #include "DataManager.h"
 
 //==============================================================================
-/*
- *
- *
- *
- * This is a change
- * This is also a change
- * cambio
- * Esto es un cambioooooo
- *
- *
- *
- *
- *
- *
- */
-//==============================================================================
 class MainContentComponent   : 	public AudioAppComponent,
 							   	public ButtonListener,
 								public SliderListener,
 								public ComboBoxListener,
-								public TextEditor::Listener
+								public TextEditor::Listener,
+                                public Timer
 {
 public:
 	//==============================================================================
 	MainContentComponent()
 	{
-		
 		setAudioChannels (0, 8);
-
+        
 		// ===================== GUI SETUP =============================//
 		
 		
+        
+        // ===================== OPTION SCREEN =========================//
 		addAndMakeVisible (startButton = new TextButton ("Start Button"));
 		startButton->setButtonText (TRANS("start"));
 		startButton->addListener (this);
 		startButton->setEnabled(false);
 		
-		addAndMakeVisible (opt1Button = new TextButton ("Opt1 Button"));
+        addAndMakeVisible (textEditor = new TextEditor ("new text editor"));
+        textEditor->setMultiLine (true);
+        textEditor->setReturnKeyStartsNewLine (true);
+        textEditor->setReadOnly (true);
+        textEditor->setScrollbarsShown (false);
+        textEditor->setCaretVisible (false);
+        textEditor->setPopupMenuEnabled (false);
+        textEditor->setText (TRANS("Press 1 if the first signal is the leftmost signal, 2 otherwise"));
+        
+        addAndMakeVisible (userTextBox = new TextEditor ("User TextBox"));
+        userTextBox->setMultiLine (false);
+        userTextBox->setReturnKeyStartsNewLine (false);
+        userTextBox->setEscapeAndReturnKeysConsumed(false);
+        userTextBox->setReadOnly (false);
+        userTextBox->setScrollbarsShown (true);
+        userTextBox->setCaretVisible (true);
+        userTextBox->setPopupMenuEnabled (true);
+        userTextBox->setText (TRANS("What is your name?"));
+        userTextBox->addListener (this);
+        
+        addAndMakeVisible (ITDButton = new ToggleButton ("ITD Button"));
+        ITDButton->setButtonText (TRANS("ITD"));
+        ITDButton->setRadioGroupId (1);
+        ITDButton->addListener (this);
+        
+        addAndMakeVisible (ILDButton = new ToggleButton ("ILD Button"));
+        ILDButton->setButtonText (TRANS("ILD"));
+        ILDButton->setRadioGroupId (1);
+        ILDButton->addListener (this);
+        
+        addAndMakeVisible (posBox = new ComboBox ("Position Box"));
+        posBox->setEditableText (false);
+        posBox->setJustificationType (Justification::centredLeft);
+        posBox->setTextWhenNothingSelected (TRANS("Select Position"));
+        posBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
+        posBox->addItem (TRANS("Front"), 1);
+        posBox->addItem (TRANS("Front Lateral"), 2);
+        posBox->addItem (TRANS("Lateral"), 3);
+        posBox->addItem (TRANS("Rear Lateral"), 4);
+        posBox->addItem (TRANS("Rear"), 5);
+        posBox->addListener (this);
+        
+        
+        
+        // ===================== TRIAL SCREEN =========================//
+		addChildComponent(opt1Button = new TextButton ("Opt1 Button"));
 		opt1Button->setButtonText (TRANS("1"));
 		opt1Button->addListener (this);
+        opt1Button->setEnabled(false);
 		
-		addAndMakeVisible (opt2Button = new TextButton ("Opt2 Button"));
+		addChildComponent(opt2Button = new TextButton ("Opt2 Button"));
 		opt2Button->setButtonText (TRANS("2"));
 		opt2Button->addListener (this);
-		
-		addAndMakeVisible (textEditor = new TextEditor ("new text editor"));
-		textEditor->setMultiLine (true);
-		textEditor->setReturnKeyStartsNewLine (true);
-		textEditor->setReadOnly (true);
-		textEditor->setScrollbarsShown (false);
-		textEditor->setCaretVisible (false);
-		textEditor->setPopupMenuEnabled (false);
-		textEditor->setText (TRANS("Press 1 if the first signal is the leftmost signal, 2 otherwise"));
-		
-		addAndMakeVisible (ITDButton = new ToggleButton ("ITD Button"));
-		ITDButton->setButtonText (TRANS("ITD"));
-		ITDButton->setRadioGroupId (1);
-		ITDButton->addListener (this);
-		
-		addAndMakeVisible (ILDButton = new ToggleButton ("ILD Button"));
-		ILDButton->setButtonText (TRANS("ILD"));
-		ILDButton->setRadioGroupId (1);
-		ILDButton->addListener (this);
-		
-		addAndMakeVisible (playButton = new TextButton ("Play Button"));
+		opt2Button->setEnabled(false);
+        
+
+        //===================== HIDDEN GEMS ==========================//
+        //  use these to control the audio?
+		addChildComponent (playButton = new TextButton ("Play Button"));
 		playButton->setButtonText (TRANS("Play"));
 		playButton->addListener (this);
 		
-		addAndMakeVisible (leftButton = new ToggleButton ("Left Button"));
+		addChildComponent (leftButton = new ToggleButton ("Left Button"));
 		leftButton->setButtonText (TRANS("left"));
 		leftButton->setRadioGroupId (2);
 		leftButton->addListener (this);
 		
-		addAndMakeVisible (rightButton = new ToggleButton ("Right Button"));
+		addChildComponent (rightButton = new ToggleButton ("Right Button"));
 		rightButton->setButtonText (TRANS("right"));
 		rightButton->setRadioGroupId (2);
 		rightButton->addListener (this);
 		rightButton->setToggleState (true, dontSendNotification);
 		
-		addAndMakeVisible (dlySlider = new Slider ("Dly Slider"));
+		addChildComponent (dlySlider = new Slider ("Dly Slider"));
 		dlySlider->setRange (0, 20, 0);
 		dlySlider->setSliderStyle (Slider::LinearHorizontal);
 		dlySlider->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
 		dlySlider->addListener (this);
 		
-		addAndMakeVisible (gainSlider = new Slider ("Gain Slider"));
+		addChildComponent (gainSlider = new Slider ("Gain Slider"));
 		gainSlider->setRange (0, 20, 0);
 		gainSlider->setSliderStyle (Slider::LinearHorizontal);
 		gainSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
 		gainSlider->addListener (this);
 		
-		addAndMakeVisible (posBox = new ComboBox ("Position Box"));
-		posBox->setEditableText (false);
-		posBox->setJustificationType (Justification::centredLeft);
-		posBox->setTextWhenNothingSelected (TRANS("Select Position"));
-		posBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-		posBox->addItem (TRANS("Front"), 1);
-		posBox->addItem (TRANS("Front Lateral"), 2);
-		posBox->addItem (TRANS("Lateral"), 3);
-		posBox->addItem (TRANS("Rear Lateral"), 4);
-		posBox->addItem (TRANS("Rear"), 5);
-		posBox->addListener (this);
-		
-		addAndMakeVisible (volSlider = new Slider ("Volume Slider"));
+		addChildComponent (volSlider = new Slider ("Volume Slider"));
 		volSlider->setRange (-60, 0, 0.1);
 		volSlider->setSliderStyle (Slider::LinearBar);
 		volSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 		volSlider->addListener (this);
-		
-		addAndMakeVisible (userTextBox = new TextEditor ("User TextBox"));
-		userTextBox->setMultiLine (false);
-		userTextBox->setReturnKeyStartsNewLine (false);
-		userTextBox->setEscapeAndReturnKeysConsumed(false);
-		userTextBox->setReadOnly (false);
-		userTextBox->setScrollbarsShown (true);
-		userTextBox->setCaretVisible (true);
-		userTextBox->setPopupMenuEnabled (true);
-		userTextBox->setText (TRANS("What is your name?"));
-		userTextBox->addListener (this);
 		
 		setSize (600, 400);
 		
@@ -204,19 +190,15 @@ public:
 		
 		g.setColour (Colours::black);
 		g.setFont (Font (15.00f, Font::plain));
-		g.drawText (TRANS("Just 4 Dbgn"),
-					7, 99, 97, 30,
-					Justification::centred, true);
+		//g.drawText (TRANS("Just 4 Dbgn"),
+		//			7, 99, 97, 30,
+		//			Justification::centred, true);
 		
-		
-		// You can add your drawing code here!
 	}
 	
 	void resized() override
 	{
-		// This is called when the MainContentComponent is resized.
-		// If you add any child components, this is where you should
-		// update their positions.
+
 		startButton->setBounds (184, 112, 224, 128);
 		opt1Button->setBounds (208, 312, 72, 24);
 		opt2Button->setBounds (304, 312, 72, 24);
@@ -233,17 +215,81 @@ public:
 		userTextBox->setBounds (224, 264, 150, 24);
 		
 	}
+    
+    
+    void timerCallback () override
+    {
+        audioPlayer.nextSate();
+        if  (audioPlayer.getState() == 3){
+            stopTimer();
+        }
+    }
+    
+    void initializeVars()
+    {
+        numReversals = 0;
+        lastAnswer = true;
+        //set the static per block data fields
+    }
 	
+    void playSequence()
+    {
+        startTimer(500);
+        //timer logic here
+        //set the trial data fields
+        opt1Button->setEnabled(true);
+        opt2Button->setEnabled(true);
+    }
+    
+    void hideOptionScreen()
+    {
+        startButton->setVisible(false);
+        textEditor->setVisible(false);
+        ITDButton->setVisible(false);
+        ILDButton->setVisible(false);
+        userTextBox->setVisible(false);
+        posBox->setVisible(false);
+    }
+    
+    void displayOptionScreen()
+    {
+        startButton->setVisible(true);
+        textEditor->setVisible(true);
+        ITDButton->setVisible(true);
+        ILDButton->setVisible(true);
+        userTextBox->setVisible(true);
+        posBox->setVisible(true);
+    }
+    
+    void hideTrialScreen()
+    {
+        opt1Button->setVisible(false);
+        opt2Button->setVisible(false);
+    }
+    
+    void displayTrialScreen()
+    {
+        opt1Button->setVisible(true);
+        opt2Button->setVisible(true);
+    }
+    
+    
 	void buttonClicked (Button* buttonThatWasClicked) override
 	{
 		if (buttonThatWasClicked == startButton)
 		{
+            initializeVars();
+            hideOptionScreen();
+            displayTrialScreen();
+            playSequence();
 		}
 		else if (buttonThatWasClicked == opt1Button)
 		{
+            startTimer(500);
 		}
 		else if (buttonThatWasClicked == opt2Button)
 		{
+            startTimer(500);
 		}
 		else if (buttonThatWasClicked == ITDButton)
 		{
@@ -287,6 +333,7 @@ public:
 	{
 		if (comboBoxThatHasChanged == posBox) {
 			spkrSel.setSpeakerSet(posBox->getSelectedItemIndex());
+            dataManager->setPosition(posBox->getSelectedItemIndex());
 		}
 		
 	}
@@ -324,6 +371,8 @@ private:
 	//==================  Private Variables  ===================//
 	
 	float vol;
+    int numReversals;
+    bool lastAnswer;
 	
 	
 	//===================  Private Members  ===================//
