@@ -21,8 +21,8 @@ SpeakerSelector::~SpeakerSelector () {
 void SpeakerSelector::process (const AudioSourceChannelInfo& bufferToFill) {
 	int bufSize = bufferToFill.buffer->getNumSamples();
 	if (spkrSet != 0) {
-		bufferToFill.buffer->copyFrom(leftDest - 1, 0, *bufferToFill.buffer, 0, 0, bufSize);
-		bufferToFill.buffer->copyFrom(rightDest - 1, 0, *bufferToFill.buffer, 1, 0, bufSize);
+		//bufferToFill.buffer->copyFrom(leftDest - 1, 0, *bufferToFill.buffer, 0, 0, bufSize);
+		//bufferToFill.buffer->copyFrom(rightDest - 1, 0, *bufferToFill.buffer, 1, 0, bufSize);
 	}
 }
 

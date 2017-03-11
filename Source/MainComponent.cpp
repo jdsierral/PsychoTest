@@ -264,12 +264,18 @@ public:
 		else if (buttonThatWasClicked == opt1Button)
 		{
             //set data field
+			
+			dataManagerDebugCall(1);
+			
             calculateNext();
             startTimer(500);
 		}
 		else if (buttonThatWasClicked == opt2Button)
 		{
             //set data field
+			
+			dataManagerDebugCall(2);
+			
             calculateNext();
             startTimer(500);
 		}
@@ -330,6 +336,13 @@ public:
 	
 private:
 	//==============================================================================
+	
+	void dataManagerDebugCall(int val) {
+		dataManager->setValue(val);
+		dataManager->writeTrial();
+		std::cout<<"Done Writing to CSV"<<std::endl;
+	}
+	
 	
 	void initAudioSettings (){
 		/*

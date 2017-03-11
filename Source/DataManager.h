@@ -33,31 +33,46 @@ public:
 	void writeTrial ();
 	void clearTrial ();
 	
+	void setTestType (bool newTestType);
 	void setPosition (int newPos);
-	void setAnwser (bool ans);
+	void setAnswer (bool ans);
 	void setCorrAns (bool ans);
-	
+	void tickReversal();
+	void setValue(double newValue);
 	
 private:
 	
-	String qualifierToString (char c) {
-		String b1 = (String)(c & 8? 1 : 0) + ",\t";
-		String b2 = (String)(c & 4? 1 : 0) + ",\t";
-		String b3 = (String)(c & 2? 1 : 0) + ",\t";
-		String b4 = (String)(c & 1? 1 : 0) + ",\t";
-		String s = b1 + b2 + b3 + b4;
-		return s;
-	}
 	
+	void dumpData(String s) {
+		fos->writeText(s, false, false);
+	}
+
+	void debugWrite() {
+		user = "Juan";
+		setTestType(false);
+		setPosition(0);
+		setAnswer(false);
+		setCorrAns(false);
+		setValue(-3.5);
+		
+	}
+
+	ScopedPointer<FileOutputStream> fos;
+	
+	void computeAnswerData();
 	
 	double 	value;
 	int 	trialNumber;
 	int 	reversal;
-	char 	answrQualifier;
+	
+	bool 	usrAns;
+	bool	corAns;
+	
 	String 	user;
 	String 	position;
-	String 	correctAns;
-	String 	answer;
+	String 	userAnswer;
+	String 	correctAnswer;
+	String  ansQualifier;
 	String  testType;
 };
 
@@ -66,6 +81,7 @@ private:
  Create a csv file that contains:
  
 Header ==>
+1		1	1
 User,TestT,Position,Trial,CorrectAns,SubjAns,Positive,FalsePositive,Negative,MissTrial,Value,Reversal
 	ITD		front		###	1/2	 	1/2			1        0            0         0		###	 Counter
 	IID		frontLeft	###

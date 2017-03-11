@@ -90,7 +90,6 @@ void AudioPlayer::setDirection (int newDirection) {
 	setGainInAmplitude(getGainInAmplitude());
 }
 
-
 int AudioPlayer::getState (){
 	return state;
 }
