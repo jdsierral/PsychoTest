@@ -55,11 +55,13 @@ public:
         ITDButton->setButtonText (TRANS("ITD"));
         ITDButton->setRadioGroupId (1);
         ITDButton->addListener (this);
+        ITDButton->setEnabled(false);
         
         addAndMakeVisible (ILDButton = new ToggleButton ("ILD Button"));
         ILDButton->setButtonText (TRANS("ILD"));
         ILDButton->setRadioGroupId (1);
         ILDButton->addListener (this);
+        ILDButton->setEnabled(false);
         
         addAndMakeVisible (posBox = new ComboBox ("Position Box"));
         posBox->setEditableText (false);
@@ -72,7 +74,7 @@ public:
         posBox->addItem (TRANS("Rear Lateral"), 4);
         posBox->addItem (TRANS("Rear"), 5);
         posBox->addListener (this);
-        
+        posBox->setEnabled(false);
         
         
         // ===================== TRIAL SCREEN =========================//
@@ -227,19 +229,65 @@ public:
     
     void calculateNext()
     {
-        
-        
-        if (audioPlayer.getTest() == audioPlayer.testType::LD){
-            currentAmplitude = audioPlayer.getGainInAmplitude()/2.f;
-            audioPlayer.setGainInAmplitude(currentAmplitude);
-            dataManager->setValue((double)currentAmplitude);
+        if (numReversals == 5){
+            hideTrialScreen();
+            displayOptionScreen();
         }
-        if (audioPlayer.getTest() == audioPlayer.testType::TD){
-            currentDelay = audioPlayer.getDelayInSamples()/2;
-            audioPlayer.setDelayInSamples(currentDelay);
-            dataManager->setValue((double)currentDelay);
+        if (currentAnswer == false){
+            //set levels to raise by 2
+            if (audioPlayer.getTest() == audioPlayer.testType::LD){
+                currentAmplitude = audioPlayer.getGainInAmplitude()*2.f;
+                audioPlayer.setGainInAmplitude(currentAmplitude);
+                dataManager->setValue((double)currentAmplitude);
+            } else if (audioPlayer.getTest() == audioPlayer.testType::TD){
+                currentDelay = audioPlayer.getDelayInSamples()*2;
+                audioPlayer.setDelayInSamples(currentDelay);
+                dataManager->setValue((double)currentDelay);
+            }
+            //check for reversal
+            if (lastAnswer == true){
+                numReversals++;
+            }
+        
+        } else { // current answer was right, check if the one before was also
+            if (lastAnswer == true){
+                if (audioPlayer.getTest() == audioPlayer.testType::LD){
+                    currentAmplitude = audioPlayer.getGainInAmplitude()/2.f;
+                    audioPlayer.setGainInAmplitude(currentAmplitude);
+                    dataManager->setValue((double)currentAmplitude);
+                } else if (audioPlayer.getTest() == audioPlayer.testType::TD){
+                    currentDelay = audioPlayer.getDelayInSamples()/2;
+                    audioPlayer.setDelayInSamples(currentDelay);
+                    dataManager->setValue((double)currentDelay);
+                }
+                numReversals++;
+            }
         }
     }
+    
+    void doButtonStuff (int ans){
+        
+        opt1Button->setEnabled(false);
+        opt2Button->setEnabled(false);
+        dataManager->setAnswer(ans);
+        if (orderSwitch == 0){
+            dataManager->setCorrAns(2);
+            corrAns = 2;
+        }else{
+            dataManager->setCorrAns(1);
+            corrAns = 1;
+        }
+        lastAnswer = currentAnswer;
+        if (ans == corrAns){
+            currentAnswer = true;
+        }else{
+            currentAnswer = false;
+        }
+        
+        calculateNext();
+        playSequence();
+    }
+    
     
     void hideOptionScreen()
     {
@@ -286,30 +334,22 @@ public:
 		else if (buttonThatWasClicked == opt1Button)
 		{
 			//dataManagerDebugCall(1);
-            opt1Button->setEnabled(false);
-            opt2Button->setEnabled(false);
-			dataManager->setAnswer(true);
-            calculateNext();
-            playSequence();
+            doButtonStuff(1);
 		}
 		else if (buttonThatWasClicked == opt2Button)
 		{
 			//dataManagerDebugCall(2);
-            opt1Button->setEnabled(false);
-            opt2Button->setEnabled(false);
-            dataManager->setAnswer(false);
-            calculateNext();
-            playSequence();
+            doButtonStuff(2);
 		}
 		else if (buttonThatWasClicked == ITDButton)
 		{
 			audioPlayer.setTest(1);
-            dataManager->setTestType(true);
+            dataManager->setTestType(1);
 		}
 		else if (buttonThatWasClicked == ILDButton)
 		{
 			audioPlayer.setTest(0);
-            dataManager->setTestType(false);
+            dataManager->setTestType(0);
 		}
 		else if (buttonThatWasClicked == playButton)
 		{
@@ -352,6 +392,9 @@ public:
 
 	void textEditorReturnKeyPressed (TextEditor& textEditorChanged) override {
 		startButton->setEnabled(true);
+        ITDButton->setEnabled(true);
+        ILDButton->setEnabled(true);
+        posBox->setEnabled(true);
 		String user = userTextBox->getText();
 		if (dataManager != NULL) {
 			delete dataManager;
@@ -395,11 +438,14 @@ private:
 	float vol;
     float currentAmplitude;
     bool answerCount;
+    bool lastAnswer;
+    bool currentAnswer;
     int numReversals;
     int currentDelay;
     int orderSwitch;
     int altOrder[4] = {2,1,0,3};
     int i;
+    int corrAns;
 	
 	//===================  Private Members  ===================//
 	
