@@ -115,7 +115,9 @@ void DataManager::writeTrial() {
 	
 	computeAnswerData();
 	
-	String sep = ",\t";
+
+	String sep = ",";
+
 	String ln = user + sep +
 				testType + sep +
 				position + sep +
