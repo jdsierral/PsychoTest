@@ -329,6 +329,9 @@ public:
 	void textEditorReturnKeyPressed (TextEditor& textEditorChanged) override {
 		startButton->setEnabled(true);
 		String user = userTextBox->getText();
+		if (dataManager != NULL) {
+			delete dataManager;
+		}
 		dataManager = new DataManager(user);
 	}
 	

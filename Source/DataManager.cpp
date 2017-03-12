@@ -15,7 +15,7 @@ DataManager::DataManager(String newUser) : trialNumber(1), reversal(0), user(new
 	const File* file = new File(fileName);
 	fos = new FileOutputStream(*file);
 	if (fos->getPosition() == 0) {
-		String sep = ",\t";
+		String sep = ",";
 		String s = "user" + sep +
 		"testType" + sep +
 		"position" + sep +
@@ -27,6 +27,10 @@ DataManager::DataManager(String newUser) : trialNumber(1), reversal(0), user(new
 		"reversal" + "\n";
 		fos->writeText(s, false, false);
 	}
+}
+
+DataManager::~DataManager() {
+	// Handle File closing;
 }
 
 void DataManager::setTestType(bool newTestType) {
@@ -123,6 +127,19 @@ void DataManager::writeTrial() {
 				(String)reversal + "\n";
 	
 	dumpData(ln);
-	
+}
+
+void DataManager::dumpData(String s) {
+	fos->writeText(s, false, false);
+}
+
+void DataManager::debugWrite() {
+	user = "Juan";
+	setTestType(false);
+	setPosition(0);
+	setAnswer(false);
+	setCorrAns(false);
+	setValue(-3.5);
 	
 }
+

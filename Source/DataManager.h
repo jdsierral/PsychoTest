@@ -29,6 +29,7 @@ public:
 	};
 	
 	DataManager (String newUser);
+	~DataManager();
 	
 	void writeTrial ();
 	void clearTrial ();
@@ -43,19 +44,8 @@ public:
 private:
 	
 	
-	void dumpData(String s) {
-		fos->writeText(s, false, false);
-	}
-
-	void debugWrite() {
-		user = "Juan";
-		setTestType(false);
-		setPosition(0);
-		setAnswer(false);
-		setCorrAns(false);
-		setValue(-3.5);
-		
-	}
+	void dumpData(String s);
+	void debugWrite();
 
 	ScopedPointer<FileOutputStream> fos;
 	
