@@ -19,16 +19,26 @@ SpeakerSelector::~SpeakerSelector () {
 }
 
 void SpeakerSelector::prepareToPlay (int samplesPerBlockExpected, double sampleRate){
-	interBuffer.clear();
-	interBuffer.setSize(8, samplesPerBlockExpected);
+	//interBuffer.clear();
+	//interBuffer.setSize(8, samplesPerBlockExpected);
 }
 
 void SpeakerSelector::process (const AudioSourceChannelInfo& bufferToFill) {
 	int bufSize = bufferToFill.buffer->getNumSamples();
-	interBuffer.makeCopyOf(*bufferToFill.buffer);
-	bufferToFill.buffer->clear();
-	bufferToFill.buffer->copyFrom(leftDest - 1, 0, interBuffer, 0, 0, bufSize);
-	bufferToFill.buffer->copyFrom(rightDest - 1, 0, interBuffer, 1, 0, bufSize);
+	
+	float** wtPtrs = bufferToFill.buffer->getArrayOfWritePointers();
+	
+	for (int i = 0; i < bufSize; i++) {
+		float leftSample = wtPtrs[0][i];
+		float rightSample = wtPtrs[1][i];
+		
+		wtPtrs[0][i] = 0;
+		wtPtrs[1][i] = 0;
+		
+		wtPtrs[leftDest - 1][i] = leftSample;
+		wtPtrs[rightDest - 1][i] = rightSample;
+	}
+	
 }
 
 void SpeakerSelector::setSpeakerSet (int newSpeakerSet) {

@@ -36,6 +36,7 @@ private:
 	float gainL;
 	float gainR;
 	int direction; // use -1 for left 0 for center 1 for right;
+	float baseGain;
 };
 
 

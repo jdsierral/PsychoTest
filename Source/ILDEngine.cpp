@@ -12,6 +12,7 @@
 
 
 ILD::ILD() : gainL(1), gainR(1), direction(center) {
+	baseGain = sqrt(0.5);
 }
 
 ILD::~ILD(){

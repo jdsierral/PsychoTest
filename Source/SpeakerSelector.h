@@ -65,7 +65,7 @@ public:
 	int getSpeakerSet ();
 	
 private:
-	AudioSampleBuffer interBuffer;
+	//AudioSampleBuffer interBuffer;
 	
 	int spkrSet;
 	int leftDest;
