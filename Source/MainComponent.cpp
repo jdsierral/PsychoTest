@@ -210,7 +210,7 @@ public:
     void initializeVars()
     {
         numReversals = 0;
-       // lastAnswer = true;
+        lastAnswer = true;
         audioPlayer.setDirection(-1);
         if (audioPlayer.getTest() == audioPlayer.testType::LD){
             audioPlayer.setGainInDecibels(-10.0);
@@ -229,47 +229,44 @@ public:
     
     void calculateNext()
     {
-        if (numReversals == 5){
-            hideTrialScreen();
-            displayOptionScreen();
-        }
+
         if (currentAnswer == false){
-            //set levels to raise by 2
-            if (audioPlayer.getTest() == audioPlayer.testType::LD){
-                currentAmplitude = audioPlayer.getGainInAmplitude()*2.f;
-                audioPlayer.setGainInAmplitude(currentAmplitude);
-                dataManager->setValue((double)currentAmplitude);
-            } else if (audioPlayer.getTest() == audioPlayer.testType::TD){
-                currentDelay = audioPlayer.getDelayInSamples()*2;
-                audioPlayer.setDelayInSamples(currentDelay);
-                dataManager->setValue((double)currentDelay);
-            }
+            setLevels(2);
             //check for reversal
             if (lastAnswer == true){
                 numReversals++;
             }
-        
         } else { // current answer was right, check if the one before was also
             if (lastAnswer == true){
-                if (audioPlayer.getTest() == audioPlayer.testType::LD){
-                    currentAmplitude = audioPlayer.getGainInAmplitude()/2.f;
-                    audioPlayer.setGainInAmplitude(currentAmplitude);
-                    dataManager->setValue((double)currentAmplitude);
-                } else if (audioPlayer.getTest() == audioPlayer.testType::TD){
-                    currentDelay = audioPlayer.getDelayInSamples()/2;
-                    audioPlayer.setDelayInSamples(currentDelay);
-                    dataManager->setValue((double)currentDelay);
-                }
+                setLevels(.5);
                 numReversals++;
             }
         }
+        if (numReversals == 5){
+            returnToStart();
+        }
     }
     
-    void doButtonStuff (int ans){
-        
+    
+    void setLevels(float factor)
+    {
+        if (audioPlayer.getTest() == audioPlayer.testType::LD){
+            currentAmplitude = audioPlayer.getGainInAmplitude()*(factor);
+            audioPlayer.setGainInAmplitude(currentAmplitude);
+            dataManager->setValue((double)currentAmplitude);
+        } else if (audioPlayer.getTest() == audioPlayer.testType::TD){
+            currentDelay = audioPlayer.getDelayInSamples()*(factor);
+            audioPlayer.setDelayInSamples(currentDelay);
+            dataManager->setValue((double)currentDelay);
+        }
+    }
+    
+    void doButtonStuff (int ans)
+    {
         opt1Button->setEnabled(false);
         opt2Button->setEnabled(false);
         dataManager->setAnswer(ans);
+        
         if (orderSwitch == 0){
             dataManager->setCorrAns(2);
             corrAns = 2;
@@ -277,17 +274,28 @@ public:
             dataManager->setCorrAns(1);
             corrAns = 1;
         }
+        
         lastAnswer = currentAnswer;
+        
         if (ans == corrAns){
             currentAnswer = true;
         }else{
             currentAnswer = false;
         }
-        
         calculateNext();
         playSequence();
     }
     
+    
+    void returnToStart()
+    {
+        startButton->setEnabled(false);
+        ITDButton->setEnabled(false);
+        ILDButton->setEnabled(false);
+        posBox->setEnabled(false);
+        hideTrialScreen();
+        displayOptionScreen();
+    }
     
     void hideOptionScreen()
     {
