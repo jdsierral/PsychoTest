@@ -10,7 +10,7 @@
 
 #include "DataManager.h"
 
-DataManager::DataManager(String newUser) : trialNumber(1), reversal(0), user(newUser) {
+DataManager::DataManager(String newUser) : trialNumber(0), reversal(0), user(newUser) {
 	const String fileName = "~/Desktop/PsychoTestFiles/" + user + ".csv";
 	const File* file = new File(fileName);
 	fos = new FileOutputStream(*file);
@@ -87,8 +87,6 @@ void DataManager::tickReversal() {
 
 void DataManager::computeAnswerData(){
 	trialNumber++;
-	userAnswer = (usrAns ? "1" : "2");
-	correctAnswer = (corAns ? "1" : "2");
 	ansQualifier = (usrAns == corAns ? "1" : "0");
 }
 
@@ -109,8 +107,8 @@ void DataManager::writeTrial() {
 				testType + sep +
 				position + sep +
 				(String)trialNumber + sep +
-				correctAnswer + sep +
-				userAnswer + sep +
+				(String)corAns + sep +
+				(String)usrAns + sep +
 				ansQualifier + sep +
 				(String)value + sep +
 				(String)reversal + "\n";

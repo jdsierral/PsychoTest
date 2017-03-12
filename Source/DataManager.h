@@ -61,8 +61,6 @@ private:
 	
 	String 	user;
 	String 	position;
-	String 	userAnswer;
-	String 	correctAnswer;
 	String  ansQualifier;
 	String  testType;
 	ScopedPointer<FileOutputStream> fos;
