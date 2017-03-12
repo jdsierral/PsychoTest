@@ -155,7 +155,7 @@ private:
 	int direction;
 	int state;
 	double fs;
-	
+	float baseGain = sqrt(0.5f);
 };
 
 

@@ -30,6 +30,8 @@ DataManager::DataManager(String newUser) : trialNumber(0), reversal(0), user(new
 		"reversal" + "\n";
 		fos->writeText(s, false, false);
 	}
+	setPosition(0);
+	setTestType(0);
 }
 
 DataManager::~DataManager() {
@@ -37,7 +39,7 @@ DataManager::~DataManager() {
 }
 
 void DataManager::setTestType(int newTestType) {
-	testType = (newTestType? "ITD" : "ILD");
+	testType = (newTestType == TD? "ITD" : "ILD");
 }
 
 void DataManager::setPosition(int newPos) {

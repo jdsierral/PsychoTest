@@ -19,8 +19,8 @@ ITD::~ITD(){
 
 
 void ITD::init(int bufferSize){
-	dlyBufSize = 2 * bufferSize;
-	if (dlyBufSize < 16) dlyBufSize = 1024;
+	dlyBufSize = MaxBufSize;
+	if (dlyBufSize < 16) dlyBufSize = MaxBufSize;
 	
 	dlyBuffer.setSize(1, dlyBufSize);
 	dlyBuffer.clear();
@@ -34,10 +34,10 @@ void ITD::setITD(int samples, int newDirection){
 	direction = newDirection;
 	if (direction == left) {
 		dlyL = 0;
-		dlyR = samples;
+		dlyR = fmin(samples, dlyBuffer.getNumSamples()); ;
 	} else if (direction == right) {
 		dlyR = 0;
-		dlyL = samples;
+		dlyL = fmin(samples, dlyBuffer.getNumSamples());
 	}
 	dwp = (drp + samples + dlyBufSize) % dlyBufSize;
 }

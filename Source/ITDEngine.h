@@ -42,6 +42,8 @@ private:
 	const float* dlyRd;
 	float* dlyWt;
 	
+	int MaxBufSize = 1024;
+	
 	AudioSampleBuffer dlyBuffer;
 };
 

@@ -42,7 +42,7 @@ void AudioPlayer::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 	source->getNextAudioBlock(*buffer);
 	int bufSize = buffer->getNumSamples();
 	buffer->copyFrom(1, 0, *buffer, 0, 0, bufSize);
-	
+	buffer->applyGain(baseGain);
 	if (state == playTest) {
 		if (testType == LD) {
 			gains->getNextAudioBlock(*buffer);
