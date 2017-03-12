@@ -240,8 +240,10 @@ public:
         } else { // current answer was right, check if the one before was also
             if (lastAnswer == true){
                 setLevels(.5);
-                numReversals++;
-                dataManager->tickReversal();
+                if (lastAnswer == false){
+                    numReversals++;
+                    dataManager->tickReversal();
+                }
             }
         }
         
