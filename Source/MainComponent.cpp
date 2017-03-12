@@ -19,7 +19,15 @@ public:
 //============================================================================//
 	MainContentComponent()
 	{
+		
 		setAudioChannels (0, 8);
+		deviceManager.getCurrentAudioDevice();
+		AudioDeviceManager::AudioDeviceSetup result;
+		deviceManager.getAudioDeviceSetup(result);
+		result.sampleRate = 96000;
+		result.bufferSize = 1024;
+		deviceManager.setAudioDeviceSetup(result, true);
+		
         
 		// ===================== GUI SETUP =============================//
 		
@@ -414,8 +422,6 @@ public:
 			DBG("AudioPlayerGaindB: "<<audioPlayer.getGainInDecibels());
 			DBG("AudioPlayerTime: "<<audioPlayer.getDelayInSamples());
 			DBG("AudioPlayerTime(s): "<<audioPlayer.getDelayInSeconds());
-			
-			
 		}
 		else if (buttonThatWasClicked == finishTest)
 		{
@@ -465,32 +471,6 @@ public:
 private:
 	//==============================================================================
 	
-	void dataManagerDebugCall(int val) {
-		dataManager->setValue(val);
-		dataManager->writeTrial();
-		std::cout<<"Done Writing to CSV"<<std::endl;
-	}
-	
-	
-	void initAudioSettings (){
-		/*
-		 AudioIODevice* ioDevice = AudioAppComponent::deviceManager.getCurrentAudioDevice();
-		 ioDevice->open(2, 2, 48000, 512);
-		 ioDevice->getCurrentSampleRate();
-		 ioDevice->getAvailableBufferSizes();
-		 
-		 Initialize AudioEngine
-		 
-		 void AudioAppComponent::setAudioChannels (int numInputChannels, int numOutputChannels, const XmlElement* const xml)
-		 {
-			String audioError = deviceManager.initialise (numInputChannels, numOutputChannels, xml, true);
-			jassert (audioError.isEmpty());
-			
-			deviceManager.addAudioCallback (&audioSourcePlayer);
-			audioSourcePlayer.setSource (this);
-		}
-		 */
-	}
 	//==================  Private Variables  ===================//
 	
 	float vol;
