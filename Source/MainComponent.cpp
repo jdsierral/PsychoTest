@@ -235,13 +235,17 @@ public:
             //check for reversal
             if (lastAnswer == true){
                 numReversals++;
+                dataManager->tickReversal();
             }
         } else { // current answer was right, check if the one before was also
             if (lastAnswer == true){
                 setLevels(.5);
                 numReversals++;
+                dataManager->tickReversal();
             }
         }
+        
+        dataManager->writeTrial();
         if (numReversals == 5){
             returnToStart();
         }
