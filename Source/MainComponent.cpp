@@ -7,7 +7,7 @@
 #include "SpeakerSelector.h"
 #include "DataManager.h"
 
-//==============================================================================
+//============================================================================//
 class MainContentComponent   : 	public AudioAppComponent,
 							   	public ButtonListener,
 								public SliderListener,
@@ -16,7 +16,7 @@ class MainContentComponent   : 	public AudioAppComponent,
                                 public Timer
 {
 public:
-	//==============================================================================
+//============================================================================//
 	MainContentComponent()
 	{
 		setAudioChannels (0, 8);
@@ -190,33 +190,54 @@ public:
     
     
     void timerCallback () override
-    {   //audioPlayer.setDirection();
-        audioPlayer.nextSate();
+    {
+        if (orderSwitch == 0){
+            audioPlayer.nextSate();
+        }else {
+            audioPlayer.setState(altOrder[i]);
+        }
+        i++;
         if  (audioPlayer.getState() == 3){
             stopTimer();
+            opt1Button->setEnabled(true);
+            opt2Button->setEnabled(true);
         }
     }
     
     void initializeVars()
     {
         numReversals = 0;
-        lastAnswer = true;
-        //set the static per block data fields
+       // lastAnswer = true;
+        audioPlayer.setDirection(-1);
+        if (audioPlayer.getTest() == audioPlayer.testType::LD){
+            audioPlayer.setGainInDecibels(-10.0);
+        }
+        if (audioPlayer.getTest() == audioPlayer.testType::TD){
+            audioPlayer.setDelayInSamples(100);
+        }
     }
 	
     void playSequence()
     {
+        i = 0;
+        orderSwitch = rand() % 2;
         startTimer(500);
-        //set the trial data fields
-        //set default delays/levels
-        opt1Button->setEnabled(true);
-        opt2Button->setEnabled(true);
     }
     
     void calculateNext()
     {
-    
-    
+        
+        
+        if (audioPlayer.getTest() == audioPlayer.testType::LD){
+            currentAmplitude = audioPlayer.getGainInAmplitude()/2.f;
+            audioPlayer.setGainInAmplitude(currentAmplitude);
+            dataManager->setValue((double)currentAmplitude);
+        }
+        if (audioPlayer.getTest() == audioPlayer.testType::TD){
+            currentDelay = audioPlayer.getDelayInSamples()/2;
+            audioPlayer.setDelayInSamples(currentDelay);
+            dataManager->setValue((double)currentDelay);
+        }
     }
     
     void hideOptionScreen()
@@ -263,29 +284,31 @@ public:
 		}
 		else if (buttonThatWasClicked == opt1Button)
 		{
-            //set data field
-			
-			dataManagerDebugCall(1);
-			
+			//dataManagerDebugCall(1);
+            opt1Button->setEnabled(false);
+            opt2Button->setEnabled(false);
+			dataManager->setAnswer(true);
             calculateNext();
-            startTimer(500);
+            playSequence();
 		}
 		else if (buttonThatWasClicked == opt2Button)
 		{
-            //set data field
-			
-			dataManagerDebugCall(2);
-			
+			//dataManagerDebugCall(2);
+            opt1Button->setEnabled(false);
+            opt2Button->setEnabled(false);
+            dataManager->setAnswer(false);
             calculateNext();
-            startTimer(500);
+            playSequence();
 		}
 		else if (buttonThatWasClicked == ITDButton)
 		{
 			audioPlayer.setTest(1);
+            dataManager->setTestType(true);
 		}
 		else if (buttonThatWasClicked == ILDButton)
 		{
 			audioPlayer.setTest(0);
+            dataManager->setTestType(false);
 		}
 		else if (buttonThatWasClicked == playButton)
 		{
@@ -366,9 +389,13 @@ private:
 	//==================  Private Variables  ===================//
 	
 	float vol;
+    float currentAmplitude;
+    bool answerCount;
     int numReversals;
-    bool lastAnswer;
-	
+    int currentDelay;
+    int orderSwitch;
+    int altOrder[4] = {2,1,0,3};
+    int i;
 	
 	//===================  Private Members  ===================//
 	
