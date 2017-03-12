@@ -148,6 +148,7 @@ public:
 	void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override
 	{
 		audioPlayer.prepareToPlay(samplesPerBlockExpected, sampleRate);
+		spkrSel.prepareToPlay(samplesPerBlockExpected, sampleRate);
 	}
 	
 	void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override
@@ -408,6 +409,7 @@ private:
 	
 	AudioPlayer audioPlayer;
 	SpeakerSelector spkrSel;
+	
 	ScopedPointer<DataManager> dataManager;
 	
 	ScopedPointer<TextButton> startButton;

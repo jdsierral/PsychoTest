@@ -33,6 +33,12 @@ public:
 	};
 	
 	/**
+	 Call before any calls to process
+	 */
+	void prepareToPlay (int samplesPerBlockExpected, double sampleRate);
+	
+	
+	/**
 	 call to process audio
 	 */
 	void process (const AudioSourceChannelInfo& bufferToFill);
@@ -59,6 +65,7 @@ public:
 	int getSpeakerSet ();
 	
 private:
+	AudioSampleBuffer interBuffer;
 	
 	int spkrSet;
 	int leftDest;

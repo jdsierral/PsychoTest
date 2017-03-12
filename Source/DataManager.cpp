@@ -14,6 +14,9 @@ DataManager::DataManager(String newUser) : trialNumber(1), reversal(0), user(new
 	const String fileName = "~/Desktop/PsychoTestFiles/" + user + ".csv";
 	const File* file = new File(fileName);
 	fos = new FileOutputStream(*file);
+	
+	assert(fos->openedOk());
+	
 	if (fos->getPosition() == 0) {
 		String sep = ",";
 		String s = "user" + sep +
@@ -33,7 +36,7 @@ DataManager::~DataManager() {
 	// Handle File closing;
 }
 
-void DataManager::setTestType(bool newTestType) {
+void DataManager::setTestType(int newTestType) {
 	testType = (newTestType? "ITD" : "ILD");
 }
 
@@ -70,11 +73,11 @@ void DataManager::setPosition(int newPos) {
 	position = s;
 }
 
-void DataManager::setAnswer(bool ans) {
+void DataManager::setAnswer(int ans) {
 	usrAns = ans;
 }
 
-void DataManager::setCorrAns(bool ans) {
+void DataManager::setCorrAns(int ans) {
 	corAns = ans;
 }
 
@@ -86,38 +89,22 @@ void DataManager::computeAnswerData(){
 	trialNumber++;
 	userAnswer = (usrAns ? "1" : "2");
 	correctAnswer = (corAns ? "1" : "2");
-	
-	// Ha I think this doesn't make any sense O.o
-	
-	if (usrAns == false && corAns == false) {
-		ansQualifier = "correct";
-	}
-	else if (usrAns == false && corAns == true) {
-		ansQualifier = "fail";
-	}
-	else if (usrAns == true && corAns == false) {
-		ansQualifier = "fail";
-	}
-	else if (usrAns == true && corAns == true) {
-		ansQualifier = "correct";
-	}
-	
-	
+	ansQualifier = (usrAns == corAns ? "1" : "0");
 }
 
 void DataManager::setValue(double newValue){
 	value = newValue;
 }
 
+
+
+// Private
+
 void DataManager::writeTrial() {
-	
-	debugWrite();
 	
 	computeAnswerData();
 	
-
 	String sep = ",";
-
 	String ln = user + sep +
 				testType + sep +
 				position + sep +
@@ -137,10 +124,11 @@ void DataManager::dumpData(String s) {
 
 void DataManager::debugWrite() {
 	user = "Juan";
-	setTestType(false);
-	setPosition(0);
-	setAnswer(false);
-	setCorrAns(false);
+	setTestType(LD);
+	setPosition(right);
+	
+	setAnswer(1);
+	setCorrAns(2);
 	setValue(-3.5);
 	
 }

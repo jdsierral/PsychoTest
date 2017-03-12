@@ -18,12 +18,17 @@ SpeakerSelector::~SpeakerSelector () {
 
 }
 
+void SpeakerSelector::prepareToPlay (int samplesPerBlockExpected, double sampleRate){
+	interBuffer.clear();
+	interBuffer.setSize(8, samplesPerBlockExpected);
+}
+
 void SpeakerSelector::process (const AudioSourceChannelInfo& bufferToFill) {
 	int bufSize = bufferToFill.buffer->getNumSamples();
-	if (spkrSet != 0) {
-		//bufferToFill.buffer->copyFrom(leftDest - 1, 0, *bufferToFill.buffer, 0, 0, bufSize);
-		//bufferToFill.buffer->copyFrom(rightDest - 1, 0, *bufferToFill.buffer, 1, 0, bufSize);
-	}
+	interBuffer.makeCopyOf(*bufferToFill.buffer);
+	bufferToFill.buffer->clear();
+	bufferToFill.buffer->copyFrom(leftDest - 1, 0, interBuffer, 0, 0, bufSize);
+	bufferToFill.buffer->copyFrom(rightDest - 1, 0, interBuffer, 1, 0, bufSize);
 }
 
 void SpeakerSelector::setSpeakerSet (int newSpeakerSet) {
