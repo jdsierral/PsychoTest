@@ -62,6 +62,7 @@ public:
         ILDButton->setRadioGroupId (1);
         ILDButton->addListener (this);
         ILDButton->setEnabled(false);
+
         
         addAndMakeVisible (posBox = new ComboBox ("Position Box"));
         posBox->setEditableText (false);
@@ -214,9 +215,11 @@ public:
         audioPlayer.setDirection(-1);
         if (audioPlayer.getTest() == audioPlayer.testType::LD){
             audioPlayer.setGainInDecibels(-10.0);
+            dataManager->setValue(-10.0);
         }
         if (audioPlayer.getTest() == audioPlayer.testType::TD){
             audioPlayer.setDelayInSamples(100);
+            dataManager->setValue(100);
         }
     }
 	
@@ -289,7 +292,9 @@ public:
             currentAnswer = false;
         }
         calculateNext();
-        playSequence();
+        if (numReversals != 5){
+            playSequence();
+        }
     }
     
     
