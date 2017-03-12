@@ -12,8 +12,8 @@
 
 DataManager::DataManager(String newUser) : trialNumber(0), reversal(0), user(newUser) {
 	const String fileName = "~/Desktop/PsychoTestFiles/" + user + ".csv";
-	const File* file = new File(fileName);
-	fos = new FileOutputStream(*file);
+	const File file (fileName);
+	fos = new FileOutputStream(file);
 	
 	assert(fos->openedOk());
 	
@@ -35,7 +35,7 @@ DataManager::DataManager(String newUser) : trialNumber(0), reversal(0), user(new
 }
 
 DataManager::~DataManager() {
-	// Handle File closing;
+	delete fos;
 }
 
 void DataManager::setTestType(int newTestType) {

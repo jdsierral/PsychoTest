@@ -125,12 +125,27 @@ public:
 		volSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
 		volSlider->addListener (this);
 		
+		
+		
+		
+		addAndMakeVisible (printData = new TextButton ("Print Data"));
+		printData->setButtonText (TRANS("Print Data"));
+		printData->addListener (this);
+		
+		addAndMakeVisible (finishTest = new TextButton ("Finish Test"));
+		finishTest->setButtonText (TRANS("Finish"));
+		finishTest->addListener (this);
+		
+		
 		setSize (600, 400);
 		
 	}
 	
 	~MainContentComponent()
 	{
+		if (dataManager != NULL)
+			delete dataManager;
+
 		startButton = nullptr;
 		opt1Button = nullptr;
 		opt2Button = nullptr;
@@ -145,6 +160,10 @@ public:
 		posBox = nullptr;
 		volSlider = nullptr;
 		userTextBox = nullptr;
+		
+		printData = nullptr;
+		finishTest = nullptr;
+		
 		shutdownAudio();
 	}
 	
@@ -190,6 +209,9 @@ public:
 		volSlider->setBounds (472, 368, 118, 24);
 		userTextBox->setBounds (224, 264, 150, 24);
 		
+		printData->setBounds (450, 260, 80, 40);
+		finishTest->setBounds (450, 320, 80, 40);
+		
 	}
     
     
@@ -214,8 +236,8 @@ public:
         lastAnswer = true;
         audioPlayer.setDirection(-1);
         if (audioPlayer.getTest() == audioPlayer.testType::LD){
-            audioPlayer.setGainInDecibels(-10.0);
-            dataManager->setValue(-10.0);
+			audioPlayer.setGainDeltaInAmplitude(1);
+            dataManager->setValue(1);
         }
         if (audioPlayer.getTest() == audioPlayer.testType::TD){
             audioPlayer.setDelayInSamples(100);
@@ -261,7 +283,7 @@ public:
     {
         if (audioPlayer.getTest() == audioPlayer.testType::LD){
             currentAmplitude = audioPlayer.getGainInAmplitude()*(factor);
-            audioPlayer.setGainInAmplitude(currentAmplitude);
+            audioPlayer.setGainDeltaInAmplitude(currentAmplitude);
             dataManager->setValue((double)currentAmplitude);
         } else if (audioPlayer.getTest() == audioPlayer.testType::TD){
             currentDelay = audioPlayer.getDelayInSamples()*(factor);
@@ -352,12 +374,10 @@ public:
 		}
 		else if (buttonThatWasClicked == opt1Button)
 		{
-			//dataManagerDebugCall(1);
             doButtonStuff(1);
 		}
 		else if (buttonThatWasClicked == opt2Button)
 		{
-			//dataManagerDebugCall(2);
             doButtonStuff(2);
 		}
 		else if (buttonThatWasClicked == ITDButton)
@@ -376,11 +396,30 @@ public:
 		}
 		else if (buttonThatWasClicked == leftButton)
 		{
-			audioPlayer.setDirection(-1);
+			audioPlayer.setDirection(audioPlayer.dir::left);
 		}
 		else if (buttonThatWasClicked == rightButton)
 		{
-			audioPlayer.setDirection(1);
+			audioPlayer.setDirection(audioPlayer.dir::right);
+		}
+		else if (buttonThatWasClicked == printData)
+		{
+			DBG("CPU Usage: "<<deviceManager.getCpuUsage());
+			AudioDeviceManager::AudioDeviceSetup result;
+			deviceManager.getAudioDeviceSetup(result);
+			DBG("SR: "<<result.sampleRate);
+			DBG("BufSize: "<<result.bufferSize);
+			
+			DBG("AudioPlayerGain: "<<audioPlayer.getGainInAmplitude());
+			DBG("AudioPlayerGaindB: "<<audioPlayer.getGainInDecibels());
+			DBG("AudioPlayerTime: "<<audioPlayer.getDelayInSamples());
+			DBG("AudioPlayerTime(s): "<<audioPlayer.getDelayInSeconds());
+			
+			
+		}
+		else if (buttonThatWasClicked == finishTest)
+		{
+			
 		}
 	}
 	
@@ -392,7 +431,7 @@ public:
 		}
 		else if (sliderThatWasMoved == gainSlider)
 		{
-			audioPlayer.setGainInDecibels(-gainSlider->getValue());
+			audioPlayer.setGainDeltaInDecibels(-gainSlider->getValue());
 		}
 		else if (sliderThatWasMoved == volSlider)
 		{
@@ -474,8 +513,7 @@ private:
 	
 	AudioPlayer audioPlayer;
 	SpeakerSelector spkrSel;
-	
-	ScopedPointer<DataManager> dataManager;
+	DataManager* dataManager;
 	
 	ScopedPointer<TextButton> startButton;
 	ScopedPointer<TextButton> opt1Button;
@@ -491,6 +529,11 @@ private:
 	ScopedPointer<Slider> volSlider;
 	ScopedPointer<ComboBox> posBox;
 	ScopedPointer<TextEditor> userTextBox;
+	
+	
+	// Just For Dbgn
+	ScopedPointer<TextButton> printData;
+	ScopedPointer<TextButton> finishTest;
 	
 	
 	

@@ -32,12 +32,13 @@ void ITD::init(int bufferSize){
 
 void ITD::setITD(int samples, int newDirection){
 	direction = newDirection;
+	samples = jlimit<int>(1, dlyBuffer.getNumSamples(), samples);
 	if (direction == left) {
 		dlyL = 0;
-		dlyR = fmin(samples, dlyBuffer.getNumSamples()); ;
+		dlyR = samples;
 	} else if (direction == right) {
 		dlyR = 0;
-		dlyL = fmin(samples, dlyBuffer.getNumSamples());
+		dlyL = samples;
 	}
 	dwp = (drp + samples + dlyBufSize) % dlyBufSize;
 }

@@ -76,19 +76,33 @@ void AudioPlayer::setDelayInSeconds (float delayInSeconds){
 	delay->setITD(delayInSamples, direction);
 }
 
-void AudioPlayer::setGainInAmplitude (float gainInAmplitude){
-	gains->setILD(gainInAmplitude, direction);
+void AudioPlayer::setGainDeltaInAmplitude (float gainDeltaInAmplitude){
+	
+	float p = getPFromAmplitude(gainDeltaInAmplitude);
+	gains->setILD(p, direction);
 }
-void AudioPlayer::setGainInDecibels (float gainInDecibels){
-	float gainInAmplitude = Decibels::decibelsToGain(gainInDecibels);
-	gains->setILD(gainInAmplitude, direction);
+void AudioPlayer::setGainDeltaInDecibels (float gainDeltaIndB){
+	
+	float p = getPFromdB(gainDeltaIndB);
+	gains->setILD(p, direction);
 }
 
 void AudioPlayer::setDirection (int newDirection) {
 	direction = newDirection;
-	setDelayInSamples(getDelayInSamples());
-	setGainInAmplitude(getGainInAmplitude());
+//	setDelayInSamples(getDelayInSamples());
+//	setGainInAmplitude(getGainInAmplitude());
 }
+
+
+float AudioPlayer::getPFromAmplitude(float x) {
+	return 0.5 * (1 - sqrt(2 * pow(x, 2) - pow(x, 4)));
+}
+
+float AudioPlayer::getPFromdB(float x) {
+	float b = powf(10, 2 * x / 20.f);
+	return b/(1+b);
+}
+
 
 int AudioPlayer::getState (){
 	return state;
@@ -105,10 +119,10 @@ float AudioPlayer::getDelayInSeconds (){
 	return delay->getdly()/fs;
 }
 float AudioPlayer::getGainInAmplitude (){
-	return gains->getLevel();
+	return gains->getGainDelta();
 }
 
 float AudioPlayer::getGainInDecibels (){
-	return Decibels::gainToDecibels(gains->getLevel());
+	return gains->getdBDelta();
 }
 

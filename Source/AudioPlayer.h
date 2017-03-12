@@ -94,12 +94,12 @@ public:
 	/**
 	 sets ampliutde relation in absolute Amplitude
 	 */
-	void setGainInAmplitude (float gainInAmplitude);
+	void setGainDeltaInAmplitude (float gainInAmplitude);
 	
 	/**
 	 sets amplitude relation in dB
 	 */
-	void setGainInDecibels (float gainInDecibels);
+	void setGainDeltaInDecibels (float gainInDecibels);
 	
 	/**
 	 set lateral direction for ITD or IID
@@ -140,13 +140,17 @@ public:
 	/**
 	 get Direction as int ==> follows 
 	 	-1 = left; 
-	 	0 = center; 
-	 	1 = right
+	 	 0 = center;
+	 	 1 = right
 	 */
 	int getDirection();
 	
 
 private:
+	
+	float getPFromAmplitude(float x);
+	float getPFromdB(float x);
+	
 	ScopedPointer<ITD> delay;
 	ScopedPointer<ILD> gains;
 	ScopedPointer<Gen> source;

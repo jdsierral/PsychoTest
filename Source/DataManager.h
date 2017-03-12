@@ -63,7 +63,7 @@ private:
 	String 	position;
 	String  ansQualifier;
 	String  testType;
-	ScopedPointer<FileOutputStream> fos;
+	FileOutputStream* fos;
 };
 
 

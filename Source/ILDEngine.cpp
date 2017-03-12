@@ -18,17 +18,21 @@ ILD::ILD() : gainL(1), gainR(1), direction(center) {
 ILD::~ILD(){
 }
 
-void ILD::setILD(float gain, int newDirection){
+void ILD::setILD(float p, int newDirection){
+	p = jlimit<float>(0, 1, p);
+	
 	direction = newDirection;
 	if (direction == left) {
-		gainL = 1;
-		gainR = gain;
+		gainL = sqrt(1-p);
+		gainR = sqrt(p);
 	} else if (direction == right) {
-		gainR = 1;
-		gainL = gain;
+		gainR = sqrt(1-p);
+		gainL = sqrt(p);
 	} else if (direction == center) {
 		gainL = gainR = 1;
 	}
+	DBG(gainL);
+	DBG(gainR);
 }
 
 void ILD::clearILD(){
@@ -36,8 +40,12 @@ void ILD::clearILD(){
 	gainL = gainR = 1;
 }
 
-float ILD::getLevel() {
-	return 1 - fabs(gainL - gainR);
+float ILD::getGainDelta() {
+	return fabs(gainL - gainR);
+}
+
+float ILD::getdBDelta() {
+	return 20 * log10(gainL/gainR);
 }
 
 
@@ -55,3 +63,5 @@ void ILD::getNextAudioBlock (AudioSampleBuffer& buffer){
 	}
 	
 }
+
+// ========================================================= //
