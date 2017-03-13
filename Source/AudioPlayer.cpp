@@ -46,6 +46,7 @@ void AudioPlayer::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 	if (state == playTest) {
 		if (testType == LD) {
 			gains->getNextAudioBlock(*buffer);
+			buffer->applyGain(1/baseGain);
 		} else if (testType == TD) {
 			delay->getNextAudioBlock(*buffer);
 		}
@@ -90,8 +91,6 @@ void AudioPlayer::setGainDeltaInDecibels (float gainDeltaIndB){
 
 void AudioPlayer::setDirection (int newDirection) {
 	direction = newDirection;
-//	setDelayInSamples(getDelayInSamples());
-//	setGainInAmplitude(getGainInAmplitude());
 }
 
 

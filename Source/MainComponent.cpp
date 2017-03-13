@@ -24,7 +24,7 @@ public:
 		deviceManager.getCurrentAudioDevice();
 		AudioDeviceManager::AudioDeviceSetup result;
 		deviceManager.getAudioDeviceSetup(result);
-		result.sampleRate = 44100;
+		result.sampleRate = 192000;
 		result.bufferSize = 1024;
 		deviceManager.setAudioDeviceSetup(result, true);
 		
@@ -144,6 +144,10 @@ public:
 		finishTest->setButtonText (TRANS("Finish"));
 		finishTest->addListener (this);
 		
+		addAndMakeVisible (testAudioButton = new TextButton ("Test Audio"));
+		testAudioButton->setButtonText (TRANS("Test Me!"));
+		testAudioButton->addListener (this);
+		
 		
 		setSize (600, 400);
 		
@@ -216,6 +220,7 @@ public:
 		posBox->setBounds (216, 352, 150, 24);
 		volSlider->setBounds (472, 368, 118, 24);
 		userTextBox->setBounds (224, 264, 150, 24);
+		testAudioButton->setBounds(450, 200, 80, 40);
 		
 		printData->setBounds (450, 260, 80, 40);
 		finishTest->setBounds (450, 320, 80, 40);
@@ -410,6 +415,14 @@ public:
 		{
 			audioPlayer.setDirection(audioPlayer.dir::right);
 		}
+		else if (buttonThatWasClicked == testAudioButton)
+		{
+			if(0 != audioPlayer.getState()) {
+				audioPlayer.setState(0);
+			} else if (0 == audioPlayer.getState()) {
+				audioPlayer.setState(1);
+			}
+		}
 		else if (buttonThatWasClicked == printData)
 		{
 			DBG("CPU Usage: "<<deviceManager.getCpuUsage());
@@ -499,9 +512,11 @@ private:
 	ScopedPointer<TextButton> opt1Button;
 	ScopedPointer<TextButton> opt2Button;
 	ScopedPointer<TextEditor> textEditor;
+	ScopedPointer<TextButton> testAudioButton;
+	ScopedPointer<TextButton> playButton;
+	
 	ScopedPointer<ToggleButton> ITDButton;
 	ScopedPointer<ToggleButton> ILDButton;
-	ScopedPointer<TextButton> playButton;
 	ScopedPointer<ToggleButton> leftButton;
 	ScopedPointer<ToggleButton> rightButton;
 	ScopedPointer<Slider> dlySlider;
