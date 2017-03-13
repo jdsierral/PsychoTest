@@ -23,7 +23,7 @@ DataManager::DataManager(String newUser) : trialNumber(0), reversal(0), user(new
 		"testType" + sep +
 		"position" + sep +
 		"trialNumber" + sep +
-		"correctAnswer" + sep +
+		"correctAnswer" + sep +	
 		"userAnswer" + sep +
 		"ansQualifier" + sep +
 		"value" + sep +

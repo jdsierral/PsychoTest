@@ -139,14 +139,17 @@ public:
 		addAndMakeVisible (printData = new TextButton ("Print Data"));
 		printData->setButtonText (TRANS("Print Data"));
 		printData->addListener (this);
+		printData->setVisible (false);
 		
 		addAndMakeVisible (finishTest = new TextButton ("Finish Test"));
 		finishTest->setButtonText (TRANS("Finish"));
 		finishTest->addListener (this);
+		finishTest->setVisible (false);
 		
 		addAndMakeVisible (testAudioButton = new TextButton ("Test Audio"));
 		testAudioButton->setButtonText (TRANS("Test Me!"));
 		testAudioButton->addListener (this);
+		
 		
 		
 		setSize (600, 400);
