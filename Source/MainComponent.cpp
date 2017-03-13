@@ -246,7 +246,8 @@ public:
     void initializeVars()
     {
         numReversals = 0;
-        lastAnswer = true;
+        corrAnsCounter = 0;
+        lastAnswer = NULL;
         audioPlayer.setDirection(-1);
         if (audioPlayer.getTest() == audioPlayer.testType::LD){
 			audioPlayer.setGainDeltaInAmplitude(1);
@@ -269,23 +270,25 @@ public:
     {
 
         if (currentAnswer == false){
-            setLevels(2);
             //check for reversal
             if (lastAnswer == true){
                 numReversals++;
                 dataManager->tickReversal();
             }
+            dataManager->writeTrial();
+            setLevels(2);
         } else { // current answer was right, check if the one before was also
-            if (lastAnswer == true){
+            if (lastAnswer == false){
+                numReversals++;
+                dataManager->tickReversal();
+            }
+            dataManager->writeTrial();
+            if (corrAnsCounter == 2){
                 setLevels(.5);
-                if (lastAnswer == false){
-                    numReversals++;
-                    dataManager->tickReversal();
-                }
+                corrAnsCounter = 0;
             }
         }
         
-        dataManager->writeTrial();
         if (numReversals == 5){
             returnToStart();
         }
@@ -323,8 +326,10 @@ public:
         
         if (ans == corrAns){
             currentAnswer = true;
+            corrAnsCounter++;
         }else{
             currentAnswer = false;
+            corrAnsCounter = 0;
         }
         calculateNext();
         if (numReversals != 5){
@@ -497,6 +502,7 @@ private:
     int altOrder[4] = {2,1,0,3};
     int i;
     int corrAns;
+    int corrAnsCounter;
 	
 	//===================  Private Members  ===================//
 	
