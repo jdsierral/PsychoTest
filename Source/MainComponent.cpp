@@ -303,11 +303,11 @@ public:
         if (audioPlayer.getTest() == audioPlayer.testType::LD){
             currentAmplitude = audioPlayer.getGainInAmplitude()*(factor);
             audioPlayer.setGainDeltaInAmplitude(currentAmplitude);
-            dataManager->setValue((double)currentAmplitude);
+            dataManager->setValue(audioPlayer.getGainInAmplitude());
         } else if (audioPlayer.getTest() == audioPlayer.testType::TD){
             currentDelay = audioPlayer.getDelayInSamples()*(factor);
             audioPlayer.setDelayInSamples(currentDelay);
-            dataManager->setValue((double)currentDelay);
+            dataManager->setValue(audioPlayer.getDelayInSamples());
         }
     }
     
