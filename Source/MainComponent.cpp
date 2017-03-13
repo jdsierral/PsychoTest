@@ -24,7 +24,7 @@ public:
 		deviceManager.getCurrentAudioDevice();
 		AudioDeviceManager::AudioDeviceSetup result;
 		deviceManager.getAudioDeviceSetup(result);
-		result.sampleRate = 96000;
+		result.sampleRate = 44100;
 		result.bufferSize = 1024;
 		deviceManager.setAudioDeviceSetup(result, true);
 		

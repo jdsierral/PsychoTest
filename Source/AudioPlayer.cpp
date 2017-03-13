@@ -77,10 +77,11 @@ void AudioPlayer::setDelayInSeconds (float delayInSeconds){
 }
 
 void AudioPlayer::setGainDeltaInAmplitude (float gainDeltaInAmplitude){
-	
+	gainDeltaInAmplitude = jlimit<float>(0.f, 1.f, gainDeltaInAmplitude);
 	float p = getPFromAmplitude(gainDeltaInAmplitude);
 	gains->setILD(p, direction);
 }
+
 void AudioPlayer::setGainDeltaInDecibels (float gainDeltaIndB){
 	
 	float p = getPFromdB(gainDeltaIndB);
