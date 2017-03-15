@@ -1,0 +1,144 @@
+user,testType,position,trialNumber,correctAnswer,userAnswer,ansQualifier,value,reversal
+Test,ILD,Front,1,1,1,1,1,1
+Test,ILD,Front,2,1,1,1,1,1
+Test,ILD,Front,3,2,2,1,0.5,1
+Test,ILD,Front,4,2,2,1,0.5,1
+Test,ILD,Front,5,2,2,1,0.25,1
+Test,ILD,Front,6,2,2,1,0.25,1
+Test,ILD,Front,7,2,2,1,0.125,1
+Test,ILD,Front,8,1,1,1,0.125,1
+Test,ILD,Front,9,1,1,1,0.0625,1
+Test,ILD,Front,10,2,2,1,0.0625,1
+Test,ILD,Front,11,1,1,1,0.0312499,1
+Test,ILD,Front,12,2,2,1,0.0312499,1
+Test,ILD,Front,13,2,1,0,0.015625,2
+Test,ILD,Front,14,1,1,1,0.0312499,3
+Test,ILD,Front,15,1,1,1,0.0312499,3
+Test,ILD,Front,16,1,1,1,0.015625,3
+Test,ILD,Front,17,1,1,1,0.015625,3
+Test,ILD,Front,18,2,1,0,0.0078125,4
+Test,ILD,Front,19,2,1,0,0.015625,4
+Test,ILD,Front,20,1,1,1,0.0312499,5
+Test,ILD,Front Right,1,1,1,1,1,0
+Test,ILD,Front Right,2,1,1,1,1,0
+Test,ILD,Front Right,3,2,1,0,0.5,1
+Test,ILD,Front Right,4,1,1,1,1,2
+Test,ILD,Front Right,5,1,1,1,1,2
+Test,ILD,Front Right,6,2,2,1,0.5,2
+Test,ILD,Front Right,7,2,2,1,0.5,2
+Test,ILD,Front Right,8,1,2,0,0.25,3
+Test,ILD,Front Right,9,1,1,1,0.5,4
+Test,ILD,Front Right,10,2,2,1,0.5,4
+Test,ILD,Front Right,11,2,2,1,0.25,4
+Test,ILD,Front Right,12,1,2,0,0.25,5
+Test,ILD,Right,1,1,1,1,1,1
+Test,ILD,Right,2,1,1,1,1,1
+Test,ILD,Right,3,1,1,1,0.5,1
+Test,ILD,Right,4,1,1,1,0.5,1
+Test,ILD,Right,5,1,2,0,0.25,2
+Test,ILD,Right,6,1,1,1,0.5,3
+Test,ILD,Right,7,2,1,0,0.5,4
+Test,ILD,Right,8,1,1,1,1,5
+Test,ILD,Back Right,1,1,1,1,1,0
+Test,ILD,Back Right,2,1,1,1,1,0
+Test,ILD,Back Right,3,2,1,0,0.5,1
+Test,ILD,Back Right,4,1,1,1,1,2
+Test,ILD,Back Right,5,2,2,1,1,2
+Test,ILD,Back Right,6,1,2,0,0.5,3
+Test,ILD,Back Right,7,1,1,1,1,4
+Test,ILD,Back Right,8,1,1,1,1,4
+Test,ILD,Back Right,9,2,1,0,0.5,5
+Test,ILD,Back,1,2,1,0,1,0
+Test,ILD,Back,2,2,2,1,1,1
+Test,ILD,Back,3,2,2,1,1,1
+Test,ILD,Back,4,2,2,1,0.5,1
+Test,ILD,Back,5,2,2,1,0.5,1
+Test,ILD,Back,6,1,1,1,0.25,1
+Test,ILD,Back,7,2,2,1,0.25,1
+Test,ILD,Back,8,2,2,1,0.125,1
+Test,ILD,Back,9,1,2,0,0.125,2
+Test,ILD,Back,10,2,2,1,0.25,3
+Test,ILD,Back,11,1,2,0,0.25,4
+Test,ILD,Back,12,1,1,1,0.5,5
+Test,ITD,Front,1,2,2,1,100,0
+Test,ITD,Front,2,2,2,1,100,0
+Test,ITD,Front,3,1,1,1,50,0
+Test,ITD,Front,4,2,2,1,50,0
+Test,ITD,Front,5,1,2,0,25,1
+Test,ITD,Front,6,1,1,1,50,2
+Test,ITD,Front,7,1,1,1,50,2
+Test,ITD,Front,8,1,1,1,25,2
+Test,ITD,Front,9,2,1,0,25,3
+Test,ITD,Front,10,1,1,1,50,4
+Test,ITD,Front,11,2,2,1,50,4
+Test,ITD,Front,12,1,1,1,25,4
+Test,ITD,Front,13,1,1,1,25,4
+Test,ITD,Front,14,1,1,1,12,4
+Test,ITD,Front,15,2,2,1,12,4
+Test,ITD,Front,16,1,1,1,6,4
+Test,ITD,Front,17,1,1,1,6,4
+Test,ITD,Front,18,1,2,0,3,5
+Test,ITD,Front Right,1,1,1,1,100,1
+Test,ITD,Front Right,2,1,2,0,100,2
+Test,ITD,Front Right,3,2,2,1,200,3
+Test,ITD,Front Right,4,2,2,1,200,3
+Test,ITD,Front Right,5,2,2,1,100,3
+Test,ITD,Front Right,6,2,2,1,100,3
+Test,ITD,Front Right,7,2,2,1,50,3
+Test,ITD,Front Right,8,1,2,0,50,4
+Test,ITD,Front Right,9,1,2,0,100,4
+Test,ITD,Front Right,10,2,2,1,200,5
+Test,ITD,Right,1,2,2,1,100,0
+Test,ITD,Right,2,2,2,1,100,0
+Test,ITD,Right,3,1,2,0,50,1
+Test,ITD,Right,4,1,1,1,100,2
+Test,ITD,Right,5,1,1,1,100,2
+Test,ITD,Right,6,1,2,0,50,3
+Test,ITD,Right,7,2,1,0,100,3
+Test,ITD,Right,8,2,1,0,200,3
+Test,ITD,Right,9,1,2,0,400,3
+Test,ITD,Right,10,1,2,0,800,3
+Test,ITD,Right,11,1,2,0,1024,3
+Test,ITD,Right,12,1,2,0,1024,3
+Test,ITD,Right,13,2,2,1,1024,4
+Test,ITD,Right,14,1,2,0,1024,5
+Test,ITD,Back Right,1,2,1,0,100,0
+Test,ITD,Back Right,2,2,2,1,200,1
+Test,ITD,Back Right,3,1,2,0,200,2
+Test,ITD,Back Right,4,1,1,1,400,3
+Test,ITD,Back Right,5,2,2,1,400,3
+Test,ITD,Back Right,6,2,2,1,200,3
+Test,ITD,Back Right,7,1,1,1,200,3
+Test,ITD,Back Right,8,2,2,1,100,3
+Test,ITD,Back Right,9,1,1,1,100,3
+Test,ITD,Back Right,10,1,1,1,50,3
+Test,ITD,Back Right,11,1,1,1,50,3
+Test,ITD,Back Right,12,1,1,1,25,3
+Test,ITD,Back Right,13,1,1,1,25,3
+Test,ITD,Back Right,14,1,1,1,12,3
+Test,ITD,Back Right,15,2,2,1,12,3
+Test,ITD,Back Right,16,1,1,1,6,3
+Test,ITD,Back Right,17,2,1,0,6,4
+Test,ITD,Back Right,18,1,2,0,12,4
+Test,ITD,Back Right,19,1,1,1,24,5
+Test,ITD,Back,1,1,1,1,100,0
+Test,ITD,Back,2,2,1,0,100,1
+Test,ITD,Back,3,1,2,0,200,1
+Test,ITD,Back,4,1,2,0,400,1
+Test,ITD,Back,5,1,2,0,800,1
+Test,ITD,Back,6,2,1,0,1024,1
+Test,ITD,Back,7,2,2,1,1024,2
+Test,ITD,Back,8,2,2,1,1024,2
+Test,ITD,Back,9,2,2,1,512,2
+Test,ITD,Back,10,2,2,1,512,2
+Test,ITD,Back,11,2,1,0,256,3
+Test,ITD,Back,12,2,2,1,512,4
+Test,ITD,Back,13,1,1,1,512,4
+Test,ITD,Back,14,2,2,1,256,4
+Test,ITD,Back,15,2,2,1,256,4
+Test,ITD,Back,16,1,1,1,128,4
+Test,ITD,Back,17,2,2,1,128,4
+Test,ITD,Back,18,1,1,1,64,4
+Test,ITD,Back,19,1,1,1,64,4
+Test,ITD,Back,20,1,1,1,32,4
+Test,ITD,Back,21,2,1,0,32,5
